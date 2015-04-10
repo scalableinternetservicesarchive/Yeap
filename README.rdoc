@@ -1,28 +1,44 @@
-== README
+This is team Yeap!
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+We are going to build something similar to "Yelp". Basically, it includes thousands of places for people to meet up, and users can browse information about places through this website.
+
 
 Things you may want to cover:
 
-* Ruby version
+Ruby version
+* 2.2.1
 
-* System dependencies
+System dependencies
+* ubuntu 14.04 lts
 
-* Configuration
+Configuration
 
-* Database creation
 
-* Database initialization
+Database creation
+* use rake db:migrate
 
-* How to run the test suite
+Database initialization
+* use rake db:seed
 
-* Services (job queues, cache servers, search engines, etc.)
+How to run the test suite
 
-* Deployment instructions
+Services (job queues, cache servers, search engines, etc.)
 
-* ...
+Deployment instructions
+
+...
 
 
 Please feel free to use a different markup language if you do not plan to run
 <tt>rake doc:app</tt>.
+
+Team members:
+Zhe Sun
+
+Li Zhang
+
+Hongbo Zhao
+
+Yang Pei
+
+
