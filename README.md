@@ -38,6 +38,7 @@ Li Zhang
 ![alt tag](https://cloud.githubusercontent.com/assets/6157306/7098082/ece9abf4-df90-11e4-9844-1b5eb7582666.jpg)
 
 Hongbo Zhao
+
 ![alt tag](https://cloud.githubusercontent.com/assets/6157306/7098355/640df836-df94-11e4-954c-36e3c8b3cf36.jpg)
 
 Yang Pei
