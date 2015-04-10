@@ -35,12 +35,13 @@ Please feel free to use a different markup language if you do not plan to run
 Team members:
 
 Zhe Sun
-
+![alt tag]()
 Li Zhang
-
+![alt tag]()
 Hongbo Zhao
-
+![alt tag]()
 Yang Pei
+![alt tag]()
 
 
 
