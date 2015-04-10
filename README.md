@@ -35,13 +35,19 @@ Please feel free to use a different markup language if you do not plan to run
 Team members:
 
 Zhe Sun
-![alt tag]()
+
+![alt tag](https://cloud.githubusercontent.com/assets/6157306/7097984/03f57aea-df90-11e4-8278-4117e3d90f15.jpg)
+
 Li Zhang
-![alt tag]()
+
+![alt tag](https://cloud.githubusercontent.com/assets/6157306/7098082/ece9abf4-df90-11e4-9844-1b5eb7582666.jpg)
+
 Hongbo Zhao
 ![alt tag]()
+
 Yang Pei
-![alt tag]()
+
+![alt tag](https://cloud.githubusercontent.com/assets/6157306/7098027/63efd53a-df90-11e4-8c61-c5f35edc105c.jpg)
 
 
 
