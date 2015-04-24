@@ -11,36 +11,6 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150423225129) do
-
-  create_table "comments", force: :cascade do |t|
-    t.integer  "user_id",     limit: 4
-    t.integer  "location_id", limit: 4
-    t.text     "content",     limit: 65535,             null: false
-    t.integer  "rate",        limit: 4,                 null: false
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
-    t.integer  "upvote",      limit: 4,     default: 0
-    t.integer  "downvote",    limit: 4,     default: 0
-  end
-
-  add_index "comments", ["location_id"], name: "index_comments_on_location_id", using: :btree
-  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
-
-  create_table "locations", force: :cascade do |t|
-    t.string   "name",       limit: 255,                                                           null: false
-    t.string   "address",    limit: 255,                                                           null: false
-    t.string   "img_url",    limit: 255,                           default: ""
-    t.text     "intro",      limit: 65535
-    t.decimal  "avg_price",                precision: 6, scale: 2
-    t.time     "start_time",                                       default: '2000-01-01 00:00:00'
-    t.time     "end_time",                                         default: '2000-01-01 00:00:00'
-    t.float    "latitude",   limit: 24,                            default: 0.0
-    t.float    "longitude",  limit: 24,                            default: 0.0
-    t.datetime "created_at",                                                                       null: false
-    t.datetime "updated_at",                                                                       null: false
-  end
-
-  add_index "locations", ["name"], name: "index_locations_on_name", using: :btree
+ActiveRecord::Schema.define(version: 0) do
 
 end
