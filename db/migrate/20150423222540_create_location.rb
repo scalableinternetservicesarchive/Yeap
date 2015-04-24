@@ -9,9 +9,10 @@ class CreateLocation < ActiveRecord::Migration
       t.decimal :avg_price, precision: 6, scale: 2
       t.time :start_time, default: "00:00:00"
       t.time :end_time, default: "00:00:00"
-      t.float :rate, default: 0.0, index: true
+      # This could be calculated each time, instead of storing it and update it
+      # t.float :rate, default: 0.0, index: true
       t.float :latitude, default: 0.0
-      t.flaot :longitude, default: 0.0
+      t.float :longitude, default: 0.0
 
       t.timestamps null: false
 
