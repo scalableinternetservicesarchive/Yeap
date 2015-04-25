@@ -35,6 +35,10 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use validates_timeliness to validate the time format
 gem 'validates_timeliness', '~> 3.0'
 
+# Use bootstrap
+gem 'bootstrap-sass', '3.2.0.0'
+
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'

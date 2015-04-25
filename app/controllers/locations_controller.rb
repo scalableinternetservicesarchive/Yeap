@@ -21,6 +21,7 @@ class LocationsController < ApplicationController
     # If the location is not found, redirect to the index page
     if @location.nil?
       redirect_to action: :index
+    end
   end
 
   private
