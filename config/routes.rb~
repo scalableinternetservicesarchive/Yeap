@@ -5,15 +5,6 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
 
-
-  # The location detail information page
-  get 'locations/:id', to: 'locations#show'
-
-
-
-
-
-
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
@@ -63,7 +54,7 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
 
-  get "/comments/new", to: "comments#new"
+  get "/comments/new", to: "comment#new"
 
 
 end

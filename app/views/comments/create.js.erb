@@ -1,0 +1,11 @@
+<ul id='comments'>
+  <%= render @comments %>
+</ul>
+
+<br>
+
+<%= form_for(@comment, remote: true) do |f| %>
+  <%= f.location_id :1 %><br>
+  <%= f.user_id :1 %>
+  <%= f.submit %>
+<% end %>
