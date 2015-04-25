@@ -5,4 +5,4 @@ rvm:
 before_script:
   - mysql -e 'create database Yeap_test;'
   - mysql -e 'create database Yeap_development;'
-  - 'rake db:migrate RAILS_ENV=test'nguage: ruby
+  - 'rake db:migrate RAILS_ENV=test'
