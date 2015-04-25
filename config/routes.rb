@@ -10,4 +10,10 @@ Rails.application.routes.draw do
   delete 'logout' => 'sessions#destroy'
 
   resources :users
+
+  # The location detail information page
+  get 'locations/:id', to: 'locations#show'
+
+  get "/comments/new", to: "comments#new"
+
 end
