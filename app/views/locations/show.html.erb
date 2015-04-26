@@ -1,7 +1,7 @@
 <div id="location_detail" class="location">
   <div class="row">
     
-    <div class="col-md-4">
+    <div class="col-md-2 col-md-offset-1">
       <div class="img">
         <%= image_tag @location[:img_url] %>
       </div>
@@ -10,7 +10,7 @@
       </div>
     </div>
     
-    <div class="col-md-4">
+    <div class="col-md-2 col-md-offset-1">
       <div class="location_information">
         <ul>
           <li><%= @location[:name] %></li>
@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-2 col-md-offset-1">
       <% if @location[:avg_price] > 0.0 && @location[:avg_price] < 50.00 %>
         <p>$</p>
       <% elsif @location[:avg_price] >= 50.00 && @location[:avg_price] < 100.00 %>
@@ -40,33 +40,15 @@
 
   </div>
   
+  <%= link_to "Add comment", new_location_comments_path(@location), remote: true%>
   <div id="add_comment" class="comment">
-    <button type="button" class="btn btn-link">
+
   </div>
 
   <div id="comment_list" class="comment">
     <ul class="list_group">
       <% @location.comments.each do |comment| %>
-      <li class="list-group-item list-group-item-info">
-        <div>
-          <div><%= "@" + comment.user[:name] + ":" + comment[:content] %></div>
-          <div class="row">
-            <div class="col-md-1">
-              <button type="button" class="btn btn-link" id="comment_upvote">
-                <%= "Upvote: " + comment[:upvote] %>
-              </button>
-            </div>
-
-            <div class="col-md-1">
-              <button type="ubtton" class="btn btn-link" id="comment_downvote">
-                <%= "Downvote: " + comment[:downvote] %>
-              </button>
-            </div>
-            
-            <div class="col-md-2"><%= comment[:time].to_s %></div>
-          </div>
-        </div>
-      </li>
+      	<%= render comment %>
       <% end %>
     </ul>
   </div>

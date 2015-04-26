@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   # The location detail information page
   get 'locations/:id', to: 'locations#show'
 
-  get "/comments/new", to: "comments#new"
+  # Create a new comment
+  get "locations/:id/comments/new", to: "comments#new", as: "new_location_comments"
+  post "locations/:id/comments", to: "comments#create", as: "location_comments"
 
 end
