@@ -48,7 +48,9 @@
   <div id="comment_list" class="comment">
     <ul class="list_group">
       <% @location.comments.each do |comment| %>
+        <li class="list-group-item list-group-item-info" id="comment_<%= comment[:id] %>">
       	<%= render comment %>
+        </li>
       <% end %>
     </ul>
   </div>

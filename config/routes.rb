@@ -17,5 +17,5 @@ Rails.application.routes.draw do
   # Create a new comment
   get "locations/:id/comments/new", to: "comments#new", as: "new_location_comments"
   post "locations/:id/comments", to: "comments#create", as: "location_comments"
-
+  post "comments/:id/upvote", to:"comments#upvote", as: "upvote"
 end

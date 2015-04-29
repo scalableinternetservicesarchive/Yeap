@@ -1,7 +1,7 @@
 class CommentsController < ApplicationController
 
   # Use this model to help validate the current user
-  # include SessionHelper
+  include SessionsHelper
 
   # Add a comment, there is no individual page for this action, instead this is a partial page used in location's show page.
   # A user need to login to add a comment
@@ -69,12 +69,51 @@ class CommentsController < ApplicationController
       format.js {}
     end
   end
-
-
+  
+  # Use this action to upvote a specific comment
+  # This action has no render page, instead it has only a javascript to return to show the change of the upvote
+  # POST /comments/:id/upvote
+  def upvote
+    # The user need to login first
+    check_login
+    # Check if the specific comment exist 
+    @comment = Comment.find(params[:id])
+    if @comment.nil?
+      flash[:danger] = "The comment does not exist"
+      redirect_to_login
+    end
+    
+    # Update the specific record by increase the upvote field by 1
+    @comment[:upvote] = @comment[:upvote] + 1
+    if @comment.save
+      respond_to do |format|
+        format.js {}
+      end
+      return
+    else
+      flash[:danger] = "Upvote failed"
+      redirect_to "locations#index"
+      return
+    end
+  end
 private
 
   def comment_params
     params.require(:comment).permit(:content, :rate)
   end
+  
+  # The helper function to help check login, if not login, redirect to login page
+  def check_login
+    unless logged_in?
+      store_location
+      flash[:danger] = "Please Login"
+      redirect_to_page login_path
+      return
+    end
+  end
 
+  def redirect_to_page(page_path)
+    render js: "window.location='#{page_path}'"
+    return
+  end
 end

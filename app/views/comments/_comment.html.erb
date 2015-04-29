@@ -1,11 +1,8 @@
-<li class="list-group-item list-group-item-info">
   <div>
     <div><%= "@" + comment.user[:name] + ":" + comment[:content] %></div>
     <div class="row">
       <div class="col-md-1">
-        <button type="button" class="btn btn-link" id="comment_upvote">
-          <%= "Upvote: " + comment[:upvote].to_s %>
-        </button>
+        <%= link_to "Upvote: "+comment[:upvote].to_s, upvote_path(comment), remote: true, method: :post %>  
       </div>
 
       <div class="col-md-1">
@@ -17,4 +14,3 @@
       <div class="col-md-2"><%= comment[:time].to_s %></div>
     </div>
   </div>
-</li>
