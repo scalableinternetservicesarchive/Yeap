@@ -8,37 +8,41 @@ class CommentsController < ApplicationController
   def create
     
     # Check if the current user is login or not
-    # unless loggin_in?
-    #   store_location
-    #   flash[:danger] = "Please login in"
-    #   redirect_to login_url
-    #   return
-    # end
-    
+    check_login
+
     # Check if the location exist or not
     location = Location.find(params[:id])
     if location.nil?
       flash[:danger] = "The location does not exist"
-      redirect_to "locations#index"
+      redirect_to_page locations_page
+      return
+    end
+
+    user = current_user
+    if user.nil?
+      redirect_to_path login_path
       return
     end
 
     # Create the comment
-    user = current_user
-    comment = Comment.new(comment_params)
+    @comment = Comment.new(comment_params)
     # Save the comment
-    location.comments << comment
-    user.comments << comment
+    location.comments << @comment
+    user.comments << @comment
 
-    respond_to do |format|
-      if comment.save
+    # If successfully saved, respond with the javascript to prepend the new comment into the comment list
+    if @comment.save
+      respond_to do |format|
         format.js {}
-        format.json { render :json => comment }
-      else
-        fromat.json { render :json => { error: "Falied to add the comment" } }
       end
+      return
+    # If failed to save, redirect to the location show page
+    else 
+      flash[:danger] = "Failed to save the comment"
+      redirect_to_page locations_page(location)
+      return
     end
-      
+
   end
 
   # a log-ined user changes his comment
@@ -53,6 +57,10 @@ class CommentsController < ApplicationController
   end
 
   def new
+
+    # Check if the user is login
+    check_login
+
     # Check the location exist
     @location = Location.find(params[:id])
     
@@ -80,7 +88,7 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
     if @comment.nil?
       flash[:danger] = "The comment does not exist"
-      redirect_to_login
+      redirect_to_path locations_path
     end
     
     # Update the specific record by increase the upvote field by 1
@@ -96,6 +104,33 @@ class CommentsController < ApplicationController
       return
     end
   end
+
+  # Use this action to downvote a specific comment
+  # This action has no render page, instead it has only a javascript to return to show the change of the downvote
+  # POST /comments/:id/downvote
+  def downvote 
+    # The user need to login first
+    check_login
+    # Check if the specific comment exist
+    @comment = Comment.find(params[:id])
+    if @comment.nil?
+      flash[:danger] = "The comment does not exist"
+      redirect_to_path locations_path
+    end
+
+    # Update the specific record by descrease the downvote field by 1
+    @comment[:downvote] = @comment[:downvote] + 1
+    if @comment.save
+      respond_to do |format|
+        format.js {}
+      end
+      return
+    else
+      flash[:danger] = "Upvote failed"
+      redirect_to_path locations_path
+      return
+    end
+  end
 private
 
   def comment_params
@@ -105,7 +140,7 @@ private
   # The helper function to help check login, if not login, redirect to login page
   def check_login
     unless logged_in?
-      store_location
+      #  store_location
       flash[:danger] = "Please Login"
       redirect_to_page login_path
       return

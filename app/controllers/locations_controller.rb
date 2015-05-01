@@ -9,7 +9,7 @@ class LocationsController < ApplicationController
   def index
     
     # Check if there is parameter num_to_return, otherwise set to the default number
-    num_to_return = params[:num_to_return].nil ? 50 : params[:num_to_return]
+    num_to_return = params[:num_to_return].nil? ? 50 : params[:num_to_return]
     @locations = Location.order("RAND()").limit(num_to_return)
 
   end
@@ -26,6 +26,14 @@ class LocationsController < ApplicationController
 
   private
   def set_location
-    @location = Location.find(params[:id])
+    @location = Location.includes(:comments).find(params[:id])
+    # Calculate the rate
+    sum = 0.0
+    count = 0
+    @location.comments.each do |comment|
+      sum += comment[:rate]
+      count += 1
+    end
+    @rate = (count == 0) ? 0 : (sum / count)
   end
 end

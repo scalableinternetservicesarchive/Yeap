@@ -6,9 +6,7 @@
       </div>
 
       <div class="col-md-1">
-        <button type="ubtton" class="btn btn-link" id="comment_downvote">
-          <%= "Downvote: " + comment[:downvote].to_s %>
-        </button>
+        <%= link_to "Downvote: "+comment[:downvote].to_s, downvote_path(comment), remote: true, method: :post %>
       </div>
       
       <div class="col-md-2"><%= comment[:time].to_s %></div>

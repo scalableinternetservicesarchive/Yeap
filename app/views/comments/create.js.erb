@@ -1,11 +1,2 @@
-<ul id='comments'>
-  <%= render @comments %>
-</ul>
-
-<br>
-
-<%= form_for(@comment, remote: true) do |f| %>
-  <%= f.location_id :1 %><br>
-  <%= f.user_id :1 %>
-  <%= f.submit %>
-<% end %>
+$('#comment_list').prepend("<li class='list-group-item list-group-item-info' id='comment_<%= @comment[:id] %>'><%= escape_javascript(render @comment) %></li>")
+$('#add_comment').html("")

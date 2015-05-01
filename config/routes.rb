@@ -11,11 +11,18 @@ Rails.application.routes.draw do
 
   resources :users
 
-  # The location detail information page
-  get 'locations/:id', to: 'locations#show'
+  # The defalut home page, show a list of locations
+  get 'locations', to: 'locations#index'
 
-  # Create a new comment
+  # The location detail information page
+  get 'locations/:id', to: 'locations#show', as: "location"
+
+  # Create a new comment and show the form
   get "locations/:id/comments/new", to: "comments#new", as: "new_location_comments"
+  # Create the comment and save it in the database
   post "locations/:id/comments", to: "comments#create", as: "location_comments"
-  post "comments/:id/upvote", to:"comments#upvote", as: "upvote"
+  # Upvote the specific comments
+  post "comments/:id/upvote", to: "comments#upvote", as: "upvote"
+  # Downvote the specific comments
+  post "comments/:id/downvote", to: "comments#downvote", as: "downvote"
 end
