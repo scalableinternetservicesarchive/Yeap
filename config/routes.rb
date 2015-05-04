@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   delete 'logout' => 'sessions#destroy'
 
   resources :users
+  resources :account_activations, only: [:edit]
 
   # The defalut home page, show a list of locations
   get 'locations', to: 'locations#index'

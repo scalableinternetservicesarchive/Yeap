@@ -1,0 +1,5 @@
+Hi <%= @user.name %>,
+
+Welcome to Yeap Yeah! Click on the link below to activate your accout:
+
+<%= edit_account_activation_url(@user.activation_token, email:@user.email) %>
