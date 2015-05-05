@@ -1,1 +1,1 @@
-$("#like").html("<%= escape_javascript( link_to @like.to_s, like_path(@location), remote: true, class: 'btn btn-default') %>") 
+$("#like").html("<%= escape_javascript( link_to @like.to_s, like_path(@location), remote: true, method: :post, class: 'btn btn-default') %>") 

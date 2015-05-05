@@ -25,4 +25,6 @@ Rails.application.routes.draw do
   post "comments/:id/upvote", to: "comments#upvote", as: "upvote"
   # Downvote the specific comments
   post "comments/:id/downvote", to: "comments#downvote", as: "downvote"
+  # Like the specific location
+  post "locations/:id/like", to: "locations#like", as: "like"
 end
