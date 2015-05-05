@@ -13,7 +13,8 @@ class User < ActiveRecord::Base
 
   # The association with comment
   has_many :comments
-  
+  # The associaton with like
+  has_many :likes
   # Returns the hash digest of the given string
   def User.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? 

@@ -11,4 +11,6 @@ class Location < ActiveRecord::Base
 
   # The relationship with comments, a location could have many comments
   has_many :comments
+  # The assocation with like
+  has_many :likes
 end
