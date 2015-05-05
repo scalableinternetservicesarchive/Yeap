@@ -18,6 +18,9 @@ Rails.application.routes.draw do
   resources :password_resets,     only: [:new, :create, :edit, :update]
   # The defalut home page, show a list of locations
   get 'locations', to: 'locations#index'
+  
+  # Like the specific location
+  post "locations/:id/like", to: "locations#like", as: "like"
 
   # The location detail information page
   get 'locations/:id', to: 'locations#show', as: "location"
