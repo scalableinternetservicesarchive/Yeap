@@ -5,8 +5,8 @@
       <div class="container">
         <%= image_tag @location[:img_url] %>
       </div>
-      <div class="like" id="like">
-        <%= link_to @like.to_s, like_path(@location), remote: true, mehtod: :post, class: "btn btn-default" %>
+      <div id="like">
+        <%= link_to @like.to_s, like_path(@location), method: :post, remote: true%>
       </div>
     </div>
     

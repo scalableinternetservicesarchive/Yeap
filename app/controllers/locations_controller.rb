@@ -37,6 +37,12 @@ class LocationsController < ApplicationController
     # Find the record
     user_id = session[:user_id]
     location_id = params[:id]
+    
+    # Check if the locaiton exist
+    @location = Location.find(location_id)
+    if @location.nil?
+      redirect_to_path locations_path
+    end
 
     record = Like.find_by(:user_id => user_id, :location_id => location_id)
     # If there is no record, then the user have not liked this location
