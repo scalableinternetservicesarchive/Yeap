@@ -2,6 +2,7 @@ class LocationsController < ApplicationController
   
   before_action :set_location, only: [:show]
 
+  include SessionsHelper
   # Return a list of locations to display on the homepage.
   # Currently, only return a list of random locations. In the future version, return the locations baed on the user's location.
   # The user does not need to login to obtain the list of locations.
@@ -24,6 +25,50 @@ class LocationsController < ApplicationController
     end
   end
 
+  # Like a specific location.
+  # The user need to login first inorder to like
+  # There is no html page for this action, only a DOM on location's show page would be effected
+  # /locations/:id/like
+  def like
+  
+    # The user need to login first
+    check_login
+
+    # Find the record
+    user_id = session[:user_id]
+    location_id = params[:id]
+
+    record = Like.find_by(:user_id => user_id, :location_id => location_id)
+    # If there is no record, then the user have not liked this location
+    # Insert a new record into the like table
+    if record.nil?
+      new_record = Like.new
+      new_record[:user_id] = user_id
+      new_record[:location_id] = location_id
+      
+      if new_record.save
+        @like = "Liked"
+        respond_to do |format|
+          format.js { }
+        end
+      else
+        redirect_to_path action: :index
+      end
+    # Otherwise the user has already liked the location
+    # Delete the location
+    else
+      if record.destroy
+        @like = "Like"
+        respond_to do |format|
+          format.js {}
+        end
+      else
+        redirect_to_path action: :index
+      end
+    end
+      
+  end
+
   private
   def set_location
     @location = Location.includes(:comments).find(params[:id])
@@ -35,5 +80,39 @@ class LocationsController < ApplicationController
       count += 1
     end
     @rate = (count == 0) ? 0 : (sum / count)
+    
+    set_liked
+  end
+
+  # Set the like status between a specific user and a specific location
+  # If the use is logged in, then directly check the information in the likes table
+  # Otherwise, set the like status to not liked
+  def set_liked
+
+    @like = "Like"
+    
+    # Update the @like information here if the user has logged in
+    if logged_in?
+      user_id = session[:user_id]
+      location_id = params[:id]
+      record = Like.find_by(:user_id => user_id, :location_id => location_id)
+      if !record.nil?
+        @like = "Liked"
+      end
+    end
+
+  end
+
+  def check_login
+    unless logged_in?
+      flash[:danger] = "Please Login"
+      redirect_to_page login_path
+      return
+    end
+  end
+
+  def redirect_to_page(page_path)
+    render js: "window.location='#{page_path}'"
+    return
   end
 end
