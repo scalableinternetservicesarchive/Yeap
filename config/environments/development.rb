@@ -19,6 +19,16 @@ Rails.application.configure do
   host = 'localhost:3000'
   config.action_mailer.default_url_options = { host: host}
 
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+         address:              'smtp.gmail.com',
+         port:                 587,
+         domain:               'yeap-yeah.com',
+         user_name:            'lizhang.rails.testing',
+         password:             'rubyonrails',
+         authentication:       'plain',
+         enable_starttls_auto: true  }
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
