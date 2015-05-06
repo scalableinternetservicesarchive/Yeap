@@ -80,6 +80,7 @@ class CommentsController < ApplicationController
   
   # Use this action to upvote a specific comment
   # This action has no render page, instead it has only a javascript to return to show the change of the upvote
+  # The user could only upvote a specific comment at most one time, and currently he could regret the choice
   # POST /comments/:id/upvote
   def upvote
     # The user need to login first
@@ -117,19 +118,53 @@ class CommentsController < ApplicationController
       flash[:danger] = "The comment does not exist"
       redirect_to_path locations_path
     end
+    
+    # Check if the user has downvoted or not
+    set_vote
+    if !@vote.nil? && @vote[:downvote] == 1 # The user has downvoted the comment
+      @message = "You have already downvoted"
+      respond_to do |format|
+        format.js { render 'error.js.html' }
+      end
+      return
+    end
+    # In order to maintain the consistency of the database, we should start a transcation here to update the votes table and comments table
+    Vote.transaction do 
+      # Insert the vote or update the vote
+      if @vote.nil?
+        @vote = Vote.new
+        @vote[:user_id] = session[:user_id]
+        @vote[:comment_id] = params[:id]
+      end
+      @vote[:downvote] = 1
+      # Update the specific record by descrease the downvote field by 1
+      @comment[:downvote] = @comment[:downvote] + 1
+      @vote.save
+      @comment.save
+    end
 
-    # Update the specific record by descrease the downvote field by 1
-    @comment[:downvote] = @comment[:downvote] + 1
-    if @comment.save
+    # Check if the update is success or not
+    if @vote.nil? || @vote[:downvote] == 0
+      flash[:danger] = "Downvote failed"
+      redirect_to_path locations_path
+      return
+    else
       respond_to do |format|
         format.js {}
       end
-      return
-    else
-      flash[:danger] = "Upvote failed"
-      redirect_to_path locations_path
-      return
     end
+    
+#    @comment[:downvote] = @comment[:downvote] + 1
+#    if @comment.save
+#      respond_to do |format|
+#        format.js {}
+#      end
+#      return
+#    else
+#      flash[:danger] = "Upvote failed"
+#      redirect_to_path locations_path
+#      return
+#    end
   end
 private
 
@@ -150,5 +185,14 @@ private
   def redirect_to_page(page_path)
     render js: "window.location='#{page_path}'"
     return
+  end
+  
+  # The helper function to set the vote for the comment specific by the id and user
+  # Check if the user is login or not before call this function
+  # This function is mainly used in upvote and downvote action
+  def set_vote
+    user_id = session[:user_id]
+    comment_id = params[:id]
+    @vote = Vote.find_by(:user_id => user_id, :comment_id => comment_id)
   end
 end
