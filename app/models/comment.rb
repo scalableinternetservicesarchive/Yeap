@@ -7,4 +7,6 @@ class Comment < ActiveRecord::Base
   # The association with location and user
   belongs_to :user
   belongs_to :location
+  # The association with vote
+  has_many :votes
 end
