@@ -170,6 +170,55 @@ class CommentsController < ApplicationController
 #      return
 #    end
   end
+
+  # Use this action to undownvote a comment
+  # The user need to be logged in and he has to already downvote a comment to do this action
+  # POST /comments/:id/undownvote
+  def undownvote 
+    # The user need to login first
+    unless logged_in?
+      flash[:danger] = "Please Login"
+      redirect_to_page login_path
+      return
+    end
+    # Check if the specific comment exist
+    @comment = Comment.find(params[:id])
+    if @comment.nil?
+      flash[:danger] = "The comment does not exist"
+      redirect_to_path locations_path
+    end
+    
+    # Check if the user has downvoted or not
+    set_vote
+    if @vote.nil? && @vote[:downvote] == 0 # The user has not downvoted the comment
+      @message = "You have not downvoted yet"
+      respond_to do |format|
+        format.js { render 'error.js.html' }
+      end
+      return
+    end
+    # In order to maintain the consistency of the database, we should start a transcation here to update the votes table and comments table
+    Vote.transaction do 
+      # Update the vote
+      @vote[:downvote] = 0
+      # Update the specific record by descrease the downvote field by 1
+      @comment[:downvote] = @comment[:downvote] - 1
+      @vote.save
+      @comment.save
+    end
+
+    # Check if the update is success or not
+    if @vote[:downvote] == 1
+      flash[:danger] = "Undownvote failed"
+      redirect_to_path locations_path
+      return
+    else
+      respond_to do |format|
+        format.js {}
+      end
+    end
+  end
+
 private
 
   def comment_params
