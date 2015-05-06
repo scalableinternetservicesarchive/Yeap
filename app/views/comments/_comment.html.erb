@@ -3,7 +3,7 @@
     <div><%= "@" + comment.user[:name] + ":" + comment[:content] %></div>
     <div class="row">
       <% vote = nil %>
-      <% vote = Vote.find(:user_id => session[:user_id], :comment_id => comment[:id]) if logged_in? %>
+      <% vote = Vote.find_by(:user_id => session[:user_id], :comment_id => comment[:id]) if logged_in? %>
       <div class="col-md-1" id="comment_<%= comment[:id] %>_upvote">
         <%= link_to "Upvote: "+comment[:upvote].to_s, upvote_path(comment), remote: true, method: :post %>  
       </div>

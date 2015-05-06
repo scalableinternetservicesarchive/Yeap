@@ -1,2 +1,2 @@
-$("#comment_<%= @comment[:id] %>").html("<%= escape_javascript(render(@comment))%>")
+$("#comment_<%= @comment[:id] %>_downvote").html("<%= escape_javascript(link_to "Undownvote: "+@comment[:downvote].to_s, undownvote_path(@comment), remote: true, :method => :post) %>")
 $("#message").html("")

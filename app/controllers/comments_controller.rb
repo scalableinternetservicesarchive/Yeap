@@ -125,7 +125,7 @@ class CommentsController < ApplicationController
     
     # Check if the user has downvoted or not
     set_vote
-    if !@vote.nil? && @vote[:downvote] == 1 # The user has downvoted the comment
+    if (!@vote.nil?) && (@vote[:downvote] == 1) # The user has downvoted the comment
       @message = "You have already downvoted"
       respond_to do |format|
         format.js { render 'error.js.html' }
@@ -148,7 +148,7 @@ class CommentsController < ApplicationController
     end
 
     # Check if the update is success or not
-    if @vote.nil? || @vote[:downvote] == 0
+    if (@vote.nil?) || (@vote[:downvote] == 0)
       flash[:danger] = "Downvote failed"
       redirect_to_path locations_path
       return
@@ -190,7 +190,7 @@ class CommentsController < ApplicationController
     
     # Check if the user has downvoted or not
     set_vote
-    if @vote.nil? && @vote[:downvote] == 0 # The user has not downvoted the comment
+    if (@vote.nil?) || (@vote[:downvote] == 0) # The user has not downvoted the comment
       @message = "You have not downvoted yet"
       respond_to do |format|
         format.js { render 'error.js.html' }
