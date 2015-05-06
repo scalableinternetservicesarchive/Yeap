@@ -2,12 +2,18 @@
   <div>
     <div><%= "@" + comment.user[:name] + ":" + comment[:content] %></div>
     <div class="row">
+      <% vote = nil %>
+      <% vote = Vote.find(:user_id => session[:user_id], :comment_id => comment[:id]) if logged_in? %>
       <div class="col-md-1" id="comment_<%= comment[:id] %>_upvote">
         <%= link_to "Upvote: "+comment[:upvote].to_s, upvote_path(comment), remote: true, method: :post %>  
       </div>
 
       <div class="col-md-1" id="comment_<%= comment[:id] %>_downvote">
+        <% if vote.nil? || vote[:downvote] == 0 %>
         <%= link_to "Downvote: "+comment[:downvote].to_s, downvote_path(comment), remote: true, method: :post %>
+        <% else %>
+        <%= link_to "Undownvote: "+comment[:downvote].to_s, undownvote_path(comment), remote: true, method: :post %>
+        <% end %>
       </div>
       
       <div class="col-md-2"><%= comment[:time].to_s %></div>
