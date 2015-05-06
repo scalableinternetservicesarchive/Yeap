@@ -5,7 +5,7 @@ class CreateLike < ActiveRecord::Migration
       t.references :user, index: true, null: false
       t.references :location, index: true, null: false
 
-      t.timestamp null: false
+      t.timestamps null: false
     end
   end
 end
