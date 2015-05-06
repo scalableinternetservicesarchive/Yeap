@@ -1,2 +1,2 @@
-$('#comment_list').prepend("<li class='list-group-item list-group-item-info' id='comment_<%= @comment[:id] %>'><%= escape_javascript(render @comment) %></li>")
+$('#comment_list').prepend("<%= escape_javascript(render @comment) %>")
 $('#add_comment').html("")

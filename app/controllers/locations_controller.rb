@@ -32,8 +32,11 @@ class LocationsController < ApplicationController
   def like
   
     # The user need to login first
-    check_login
-
+    unless logged_in?
+      flash[:danger] = "Please Login"
+      redirect_to_page login_path
+      return
+    end
     # Find the record
     user_id = session[:user_id]
     location_id = params[:id]
@@ -88,6 +91,8 @@ class LocationsController < ApplicationController
     @rate = (count == 0) ? 0 : (sum / count)
     
     set_liked
+
+    set_votes
   end
 
   # Set the like status between a specific user and a specific location
@@ -106,7 +111,23 @@ class LocationsController < ApplicationController
         @like = "Liked"
       end
     end
+  end
 
+  # Set the list of votes of the user
+  # If the user is not login, then he has no upvote or downvote right now
+  # This is used for location's show page to render the comments
+  def set_votes
+    
+    @upvote = []
+    @downvote = []
+
+    if logged_in?
+      votes = Vote.where(:user_id => session[:user_id]).to_a
+      votes.each do |vote|
+        @upvote << vote[:comment_id].to_i if vote[:upvote].to_i == 1
+        @downvote << vote[:comment_id].to_i if vote[:downvote].to_i == 1
+      end
+    end
   end
 
   def check_login

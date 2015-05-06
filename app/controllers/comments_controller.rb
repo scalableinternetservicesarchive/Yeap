@@ -111,7 +111,11 @@ class CommentsController < ApplicationController
   # POST /comments/:id/downvote
   def downvote 
     # The user need to login first
-    check_login
+    unless logged_in?
+      flash[:danger] = "Please Login"
+      redirect_to_page login_path
+      return
+    end
     # Check if the specific comment exist
     @comment = Comment.find(params[:id])
     if @comment.nil?

@@ -1,14 +1,16 @@
+<li class="list-group-item list-group-item-info" id="comment_<%= comment[:id]%>">  
   <div>
     <div><%= "@" + comment.user[:name] + ":" + comment[:content] %></div>
     <div class="row">
-      <div class="col-md-1">
+      <div class="col-md-1" id="comment_<%= comment[:id] %>_upvote">
         <%= link_to "Upvote: "+comment[:upvote].to_s, upvote_path(comment), remote: true, method: :post %>  
       </div>
 
-      <div class="col-md-1">
+      <div class="col-md-1" id="comment_<%= comment[:id] %>_downvote">
         <%= link_to "Downvote: "+comment[:downvote].to_s, downvote_path(comment), remote: true, method: :post %>
       </div>
       
       <div class="col-md-2"><%= comment[:time].to_s %></div>
     </div>
   </div>
+</li>
