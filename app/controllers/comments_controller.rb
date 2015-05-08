@@ -129,19 +129,7 @@ class CommentsController < ApplicationController
       end
     end
     
-    # Update the specific record by increase the upvote field by 1
-    @comment[:upvote] = @comment[:upvote] + 1
-    if @comment.save
-      respond_to do |format|
-        format.js {}
-      end
-      return
-    else
-      flash[:danger] = "Upvote failed"
-      redirect_to "locations#index"
-      return
-    end
-  end
+ end
   # Use this action to unupvote a comment
   # The user need to be logged in and he has to already upvote a comment to do this action
   # POST /comments/:id/unupvote

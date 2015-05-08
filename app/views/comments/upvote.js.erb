@@ -1,2 +1,2 @@
-$("#comment_<%= @comment[:id] %>_upvote").html("<%= escape_javascript(link_to "Unupvote: "+@comment[:upvote].to_s, unupvote_path(@comment), remote: true, :method => :post %>")
+$("#comment_<%= @comment[:id] %>_upvote").html("<%= escape_javascript(link_to "Unupvote: "+@comment[:upvote].to_s, unupvote_path(@comment), remote: true, :method => :post) %>")
 $("#message").html("")
