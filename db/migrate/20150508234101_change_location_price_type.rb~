@@ -1,0 +1,5 @@
+class ChangeLocationPriceType < ActiveRecord::Migration
+  def change
+    change_column :avg_price, :string
+  end
+end
