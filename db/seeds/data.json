@@ -1,81 +1,91 @@
 [
     {
         "name": "Prospect Gourmand", 
+        "address": "272 S La Cienega Blvd, Beverly Hills, CA 90211", 
         "rate": "4.5", 
         "intro": "Breakfast &amp; Brunch, American (New), Wine Bars", 
-        "address": "272 S La Cienega Blvd, Beverly Hills, CA 90211", 
+        "avg_price": "$$", 
         "img_name": "xRF-nJKUJhYjYBbsL-Jq2w", 
         "img_url": "xRF-nJKUJhYjYBbsL-Jq2w.jpg"
     }, 
     {
         "name": "The Honor Bar", 
+        "address": "122 S Beverly Dr, Beverly Hills, CA 90212", 
         "rate": "4.5", 
         "intro": "Bars, Sandwiches, Burgers", 
-        "address": "122 S Beverly Dr, Beverly Hills, CA 90212", 
+        "avg_price": "$$", 
         "img_name": "GX_t5OLDY6HUhU0mDRs_ZA", 
         "img_url": "GX_t5OLDY6HUhU0mDRs_ZA.jpg"
     }, 
     {
         "name": "Spaghettini &amp; the Dave Koz Lounge", 
+        "address": "184 N Canon Dr, Beverly Hills, CA 90210", 
         "rate": "4.5", 
         "intro": "Italian", 
-        "address": "184 N Canon Dr, Beverly Hills, CA 90210", 
+        "avg_price": "$$$", 
         "img_name": "KeUnfsVltkY53kB9xm1Arw", 
         "img_url": "KeUnfsVltkY53kB9xm1Arw.jpg"
     }, 
     {
         "name": "Spice Affair", 
+        "address": "50 N La Cienega Blvd, Beverly Hills, CA 90211", 
         "rate": "4.5", 
         "intro": "Indian, Venues &amp; Event Spaces, Lounges", 
-        "address": "50 N La Cienega Blvd, Beverly Hills, CA 90211", 
+        "avg_price": "$$", 
         "img_name": "8sDoS784ASdSJqj25PFi1w", 
         "img_url": "8sDoS784ASdSJqj25PFi1w.jpg"
     }, 
     {
         "name": "Da Pasquale Restaurant", 
+        "address": "9749 S Santa Monica Blvd, Beverly Hills, CA 90210", 
         "rate": "4.0", 
         "intro": "Italian, Pizza", 
-        "address": "9749 S Santa Monica Blvd, Beverly Hills, CA 90210", 
+        "avg_price": "$$", 
         "img_name": "A0koPDvrjxadvMeMrLZjhg", 
         "img_url": "A0koPDvrjxadvMeMrLZjhg.jpg"
     }, 
     {
         "name": "The Stinking Rose - A Garlic Restaurant", 
+        "address": "55 N La Cienega Blvd, Beverly Hills, CA 90211", 
         "rate": "4.0", 
         "intro": "Italian, American (New), Steakhouses", 
-        "address": "55 N La Cienega Blvd, Beverly Hills, CA 90211", 
+        "avg_price": "$$", 
         "img_name": "DWTjtIoJE2PorBIk6Dz6TQ", 
         "img_url": "DWTjtIoJE2PorBIk6Dz6TQ.jpg"
     }, 
     {
         "name": "Maude", 
+        "address": "212 S Beverly Dr, Beverly Hills, CA 90212", 
         "rate": "4.5", 
         "intro": "Restaurants", 
-        "address": "212 S Beverly Dr, Beverly Hills, CA 90212", 
+        "avg_price": "$$$$", 
         "img_name": "W9r2p9ZM6jhANLBWO0QfTA", 
         "img_url": "W9r2p9ZM6jhANLBWO0QfTA.jpg"
     }, 
     {
         "name": "Mastro\u2019s Steakhouse Beverly Hills Penthouse", 
+        "address": "246 N Canon Dr, Beverly Hills, CA 90210", 
         "rate": "4.5", 
         "intro": "Steakhouses, Lounges", 
-        "address": "246 N Canon Dr, Beverly Hills, CA 90210", 
+        "avg_price": "$$$$", 
         "img_name": "-zlW4kdNxHuyD8Rv8VQTMg", 
         "img_url": "-zlW4kdNxHuyD8Rv8VQTMg.jpg"
     }, 
     {
         "name": "Tagine Beverly Hills", 
+        "address": "132 N Robertson Blvd, Beverly Hills, CA 90211", 
         "rate": "4.5", 
         "intro": "Moroccan", 
-        "address": "132 N Robertson Blvd, Beverly Hills, CA 90211", 
+        "avg_price": "$$$", 
         "img_name": "3ONaFP2zmZ8qNQLnXS1T4g", 
         "img_url": "3ONaFP2zmZ8qNQLnXS1T4g.jpg"
     }, 
     {
         "name": "Urth Caffe", 
+        "address": "267 S Beverly Dr, Beverly Hills, CA 90212", 
         "rate": "4.0", 
         "intro": "Coffee &amp; Tea, Breakfast &amp; Brunch", 
-        "address": "267 S Beverly Dr, Beverly Hills, CA 90212", 
+        "avg_price": "$$", 
         "img_name": "rO0llUCemzoef5HxrIf4vQ", 
         "img_url": "rO0llUCemzoef5HxrIf4vQ.jpg"
     }
