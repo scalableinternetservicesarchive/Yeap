@@ -35,4 +35,6 @@ Rails.application.routes.draw do
   post "comments/:id/downvote", to: "comments#downvote", as: "downvote"
   # Undownvote the specific comments
   post "comments/:id/undownvote", to: "comments#undownvote", as: "undownvote"
+  # Unupvote the specific comments
+  post "comments/:id/unupvote", to: "comments#unupvote", as: "unupvote"
 end

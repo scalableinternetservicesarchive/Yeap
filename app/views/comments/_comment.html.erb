@@ -5,7 +5,11 @@
       <% vote = nil %>
       <% vote = Vote.find_by(:user_id => session[:user_id], :comment_id => comment[:id]) if logged_in? %>
       <div class="col-md-1" id="comment_<%= comment[:id] %>_upvote">
-        <%= link_to "Upvote: "+comment[:upvote].to_s, upvote_path(comment), remote: true, method: :post %>  
+        <% if vote.nil? || vote[:upvote] == 0 %>
+        <%= link_to "Upvote: "+comment[:upvote].to_s, downvote_path(comment), remote: true, method: :post %>
+        <% else %>
+        <%= link_to "Unupvote: "+comment[:upvote].to_s, undownvote_path(comment), remote: true, method: :post %>
+        <% end %>
       </div>
 
       <div class="col-md-1" id="comment_<%= comment[:id] %>_downvote">

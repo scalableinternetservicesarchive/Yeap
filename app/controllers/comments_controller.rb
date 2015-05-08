@@ -32,6 +32,8 @@ class CommentsController < ApplicationController
 
     # If successfully saved, respond with the javascript to prepend the new comment into the comment list
     if @comment.save
+      # Update the rate information
+      @rate = Comment.where(:location_id => params[:id]).average("rate").to_i
       respond_to do |format|
         format.js {}
       end
@@ -92,6 +94,41 @@ class CommentsController < ApplicationController
       redirect_to_path locations_path
     end
     
+    # Check if the user has downvoted or not
+    set_vote
+    if (!@vote.nil?) && (@vote[:upvote] == 1) # The user has upvoted the comment
+      @message = "You have already upvoted"
+      respond_to do |format|
+        format.js { render 'error.js.html' }
+      end
+      return
+    end
+    # In order to maintain the consistency of the database, we should start a transcation here to update the votes table and comments table
+    Vote.transaction do 
+      # Insert the vote or update the vote
+      if @vote.nil?
+        @vote = Vote.new
+        @vote[:user_id] = session[:user_id]
+        @vote[:comment_id] = params[:id]
+      end
+      @vote[:upvote] = 1
+      # Update the specific record by descrease the downvote field by 1
+      @comment[:upvote] = @comment[:upvote] + 1
+      @vote.save
+      @comment.save
+    end
+
+    # Check if the update is success or not
+    if (@vote.nil?) || (@vote[:upvote] == 0)
+      flash[:danger] = "Upvote failed"
+      redirect_to_path locations_path
+      return
+    else
+      respond_to do |format|
+        format.js {}
+      end
+    end
+    
     # Update the specific record by increase the upvote field by 1
     @comment[:upvote] = @comment[:upvote] + 1
     if @comment.save
@@ -105,8 +142,54 @@ class CommentsController < ApplicationController
       return
     end
   end
+  # Use this action to unupvote a comment
+  # The user need to be logged in and he has to already upvote a comment to do this action
+  # POST /comments/:id/unupvote
+  def unupvote 
+    # The user need to login first
+    unless logged_in?
+      flash[:danger] = "Please Login"
+      redirect_to_page login_path
+      return
+    end
+    # Check if the specific comment exist
+    @comment = Comment.find(params[:id])
+    if @comment.nil?
+      flash[:danger] = "The comment does not exist"
+      redirect_to_path locations_path
+    end
+    
+    # Check if the user has downvoted or not
+    set_vote
+    if (@vote.nil?) || (@vote[:upvote] == 0) # The user has not downvoted the comment
+      @message = "You have not downvoted yet"
+      respond_to do |format|
+        format.js { render 'error.js.html' }
+      end
+      return
+    end
+    # In order to maintain the consistency of the database, we should start a transcation here to update the votes table and comments table
+    Vote.transaction do 
+      # Update the vote
+      @vote[:upvote] = 0
+      # Update the specific record by descrease the downvote field by 1
+      @comment[:upvote] = @comment[:upvote] - 1
+      @vote.save
+      @comment.save
+    end
 
-  # Use this action to downvote a specific comment
+    # Check if the update is success or not
+    if @vote[:upvote] == 1
+      flash[:danger] = "Unupvote failed"
+      redirect_to_path locations_path
+      return
+    else
+      respond_to do |format|
+        format.js {}
+      end
+    end
+  end
+  
   # This action has no render page, instead it has only a javascript to return to show the change of the downvote
   # POST /comments/:id/downvote
   def downvote 
