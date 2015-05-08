@@ -1,11 +1,10 @@
 <div id="location_detail" class="location">
   <div class="row">
-    
     <div class="col-md-2 col-md-offset-1">
       <div class="container">
         <%= image_tag @location[:img_url] %>
       </div>
-      <div id="like">
+      <div id="like" >
         <%= link_to @like.to_s, like_path(@location), method: :post, remote: true%>
       </div>
     </div>
@@ -13,28 +12,14 @@
     <div class="col-md-2 col-md-offset-1">
       <div class="container">
         <ul>
-          <li><%= @location[:name] %></li>
-          <li><%= @location[:address] %></li>
-          <li><%= @location[:start_time].strftime("%H:%M:%S") + " - " + @location[:end_time].strftime("%H:%M:%S") %>
+          <li><%= "Name: " + @location[:name] %></li>
+          <li><%= "Address: " + @location[:address] %></li>
+          <li><%= "Bussiness Time: " + @location[:start_time].strftime("%H:%M:%S") + " - " + @location[:end_time].strftime("%H:%M:%S") %>
+          <li><%= "Average Price: " + @location[:avg_price].to_s %></li>
+          <li id="rate"><%= "Rate: " + @rate.to_s %></li>
         </ul>
       </div>
     </div>
-
-    <div class="col-md-2 col-md-offset-1">
-      <div class="container">
-        <% if @location[:avg_price] > 0.0 && @location[:avg_price] < 50.00 %>
-          <p>$</p>
-        <% elsif @location[:avg_price] >= 50.00 && @location[:avg_price] < 100.00 %>
-          <p>$$</p>
-        <% else %>
-          <p>$$$</p>
-        <% end %>
-        <div id="rate">
-          Rate: <%= @rate %>
-        </div>
-      </div>
-    </div>
-
   </div>
 
   <div id="location_intro" class="panel panel-default">
