@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE tsung SYSTEM "/usr/share/tsung/tsung-1.0.dtd" []>  
+  <tsung loglevel="notice" version="1.0">
+    <clients>
+      <client host="localhost" cpu="2" maxusers="15000" />
+    </clients>
+  
+    <servers>
+      <server host="localhost" port="3000" type="tcp" />
+    </servers>
+
+    <load>
+      <arrivalphase phase="1" duration="1" unit="minute" >
+        <users arrivalrate="1" unit="second" maxnumber="1000"/>
+      </arrivalphase>
+
+      <arrivalphase phase="2" duration="1" unit="minute" >
+        <users arrivalrate="5" unit="second" maxnumber="1000"/>
+      </arrivalphase>
+
+      <arrivalphase phase="3" duration="1" unit="minute" >
+        <users arrivalrate="10" unit="second" maxnumber="1000" />
+      </arrivalphase>
+    </load>
+
+    <sessions>
+      <session name="locations" weight="1" type="ts_http">
+        <request>
+          <http url="/locations" version="1.1" method="GET"/>
+        </request>
+      </session>
+
+      <session name="add-comment-and-upvote" weight="1" type="ts_http">
+        <request subst="true">
+          <http url="/login" method="POST" version="1.1" content_type="application/json"
+            contents="{&quot;name&quot;:&quot;u%%ts_user_server:get_unique_id%%&quot;,&quot;password&quot;:&quot;password&quot;}"/>
+        </request>
+
+        <thinktime value="10" random="true"></thinktime>
+
+
+    </sessions>
+  </tsung>
