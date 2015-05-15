@@ -38,7 +38,7 @@ categories = {}
 # add each place
 places.each do |place|
   place_id = place_id + 1
-  Location.create!(:name => place['name'], :address => place['address'], :img_url => place['img_url'], :intro => place['intro'])
+  Location.create!(:name => place['name'], :address => place['address'], :img_url => place['img_url'], :intro => place['intro'], :avg_price => place['avg_price'])
 
 end
 puts place_id.to_s + ' locations has been added into Place'
