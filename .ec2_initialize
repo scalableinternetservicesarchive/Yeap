@@ -1,4 +1,6 @@
 sudo yum install -y patch
 sudo yum install -y sqlite-devel
 gem install nokogiri -v '1.6.6.2'
+pip install --upgrade setuptools
+pip install --upgrade distribute
 
