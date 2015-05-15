@@ -14,16 +14,11 @@ class CommentsController < ApplicationController
     location = Location.find(params[:id])
     if location.nil?
       flash[:danger] = "The location does not exist"
-      redirect_to_page locations_page
+      redirect_to_page locations_path
       return
     end
 
-    user = current_user
-    if user.nil?
-      redirect_to_path login_path
-      return
-    end
-
+    user = @current_user
     # Create the comment
     @comment = Comment.new(comment_params)
     # Save the comment
