@@ -1,4 +1,5 @@
 <% provide(:title, @user.name) %>
+<div>
 <div class="col-md-4">
   <aside class="user_info">
     <section class="user_info">
@@ -9,4 +10,20 @@
     </section>
   </aside>
 </div>
- 
+<br><br><br><br><br><br>
+<div id="user_activity" >
+  <ul class="list-group">
+    <% @user_activity.each do |activity|
+        if activity.class == Comment %>
+        <li class="list-group-item list-group-item-info">Comment on <%= link_to activity.location[:name], location_path(activity.location) %> with rate <%= activity[:rate] %> at <%= activity[:updated_at] %></li>
+    <%  elsif activity.class == Like %>
+        <li class="list-group-item list-group-item-info">Like the location <%= link_to activity.location[:name], location_path(activity.location) %> at <%= activity[:updated_at] %></li>
+    <%  elsif (activity.class == Vote) && (activity[:upvote] == 1) %>
+        <li class="list-group-item list-group-item-info">Upvote user <%= link_to activity.comment.user[:name], user_path(activity.comment.user) %>'s comment on location <%= link_to activity.comment.location[:name], location_path(activity.comment.location) %> at <%= activity[:updated_at] %></li>
+    <%  else %>
+        <li class="list-group-item list-group-item-info">Downvote user <%= link_to activity.comment.user[:name], user_path(activity.comment.user) %>'s comment on location <%= link_to activity.comment.location[:name], location_path(activity.comment.location) %> at <%= activity[:updated_at] %></li>
+    <%  end %>
+    <% end %>
+  </ul>
+</div>
+</div> 

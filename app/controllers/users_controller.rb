@@ -14,7 +14,23 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-  end
+    
+    # Select the user's activity, includes comments, vote and likes
+    user_comments = Comment.includes(:location).where(:user_id => @user[:id]).order(:created_at => :desc).limit(20)
+    user_likes = Like.includes(:location).where(:user_id => @user[:id]).order(:updated_at => :desc).limit(20)
+    user_upvotes = Vote.includes(:comment).where(:user_id => @user[:id], :upvote => 1).order(:updated_at => :desc).limit(10)
+    user_downvotes = Vote.includes(:comment).where(:user_id => @user[:id], :downvote => 1).order(:updated_at => :desc).limit(10)
+
+    @user_activity = []
+    user_comments.each { |elem| @user_activity << elem }
+    user_likes.each { |elem| @user_activity << elem }
+    user_upvotes.each { |elem| @user_activity << elem }
+    user_downvotes.each { |elem| @uesr_activity << elem }
+
+    @user_activity.sort_by! { |elem| elem[:updated_at] }
+    @user_activity.reverse!
+
+ end
 
   def create
     @user = User.new(user_params) 
