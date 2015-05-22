@@ -1,6 +1,6 @@
 <div id="location_detail" class="location">
   <div class="row">
-    <div class="col-md-2 col-md-offset-1">
+    <div class="col-md-3">
       <div class="container">
         <%= image_tag @location[:img_url], size: "200" %>
       </div>
@@ -16,7 +16,7 @@
           <li><%= "Address: " + @location[:address] %></li>
           <li><%= "Bussiness Time: " + @location[:start_time].strftime("%H:%M:%S") + " - " + @location[:end_time].strftime("%H:%M:%S") %>
           <li><%= "Average Price: " + @location[:avg_price].to_s %></li>
-          <li id="rate"><%= "Rate: " + @rate.to_s %></li>
+          <li id="rate"><%= "Rate: " + @rate.round(2).to_s %></li>
         </ul>
       </div>
     </div>
