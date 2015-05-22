@@ -25,7 +25,7 @@ class UsersController < ApplicationController
     user_comments.each { |elem| @user_activity << elem }
     user_likes.each { |elem| @user_activity << elem }
     user_upvotes.each { |elem| @user_activity << elem }
-    user_downvotes.each { |elem| @uesr_activity << elem }
+    user_downvotes.each { |elem| @user_activity << elem }
 
     @user_activity.sort_by! { |elem| elem[:updated_at] }
     @user_activity.reverse!
