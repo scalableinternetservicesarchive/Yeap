@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150508234101) do
+ActiveRecord::Schema.define(version: 20150603195013) do
 
   create_table "comments", force: :cascade do |t|
     t.integer  "user_id",     limit: 4
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 20150508234101) do
     t.datetime "updated_at",                            null: false
     t.integer  "upvote",      limit: 4,     default: 0
     t.integer  "downvote",    limit: 4,     default: 0
+    t.string   "user_name",   limit: 255,               null: false
   end
 
   add_index "comments", ["location_id"], name: "index_comments_on_location_id", using: :btree

@@ -1,11 +1,9 @@
 <li class="list-group-item list-group-item-info" id="comment_<%= comment[:id]%>">  
   <div>
-    <div><%= link_to "@"+comment.user[:name]+":", user_path(comment.user) %><%= " "+comment[:content] %></div>
+    <div><%= link_to "@"+comment[:user_name]+":", user_path(comment[:user_id]) %><%= " "+comment[:content] %></div>
     <div class="row">
-      <% vote = nil %>
-      <% vote = Vote.find_by(:user_id => session[:user_id], :comment_id => comment[:id]) if logged_in? %>
       <div class="col-md-1" id="comment_<%= comment[:id] %>_upvote">
-        <% if vote.nil? || vote[:upvote] == 0 %>
+        <% if !@upvote.include? comment[:id] %>
         <%= link_to "Upvote: "+comment[:upvote].to_s, upvote_path(comment), remote: true, method: :post %>
         <% else %>
         <%= link_to "Unupvote: "+comment[:upvote].to_s, unupvote_path(comment), remote: true, method: :post %>
@@ -13,7 +11,7 @@
       </div>
 
       <div class="col-md-1" id="comment_<%= comment[:id] %>_downvote">
-        <% if vote.nil? || vote[:downvote] == 0 %>
+        <% if !@downvote.include? comment[:id] %>
         <%= link_to "Downvote: "+comment[:downvote].to_s, downvote_path(comment), remote: true, method: :post %>
         <% else %>
         <%= link_to "Undownvote: "+comment[:downvote].to_s, undownvote_path(comment), remote: true, method: :post %>

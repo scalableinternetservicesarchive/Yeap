@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE tsung SYSTEM "/usr/share/tsung/tsung-1.0.dtd" []>
+	<tsung loglevel="notice" version="1.0">
+		<clients>
+			<client host="localhost" maxusers="15000" use_controller_vm="true" />
+		</clients>
+
+		<servers>
+			<server host="localhost" port="3000" type="tcp" />
+		</servers>
+
+		<load>
+			<arrivalphase phase="1" duration="1" unit="minute">
+				<users arrivalrate="1" unit="second" maxnumber="1000" />
+			</arrivalphase>
+			
+			<arrivalphase phase="2" duration="1" unit="minute">
+				<users arrivalrate="1.5" unit="second" maxnumber="1000" />
+			</arrivalphase>
+
+			<arrivalphase phase="3" duration="1" unit="minute">
+				<users arrivalrate="2" unit="second" maxnumber="1000" />
+			</arrivalphase>
+
+			<arrivalphase phase="4" duration="1" unit="minute">
+				<users arrivalrate="2.5" unit="second" maxnumber="1000" />
+			</arrivalphase>
+
+			<arrivalphase phase="5" duration="1" unit="minute">
+				<users arrivalrate="4" unit="second" maxnumber="1000" />
+			</arrivalphase>
+
+			<!-- <arrivalphase phase="6" duration="1" unit="minute">
+				<users arrivalrate="5" unit="second" maxnumber="1000" />
+			</arrivalphase>
+
+			<arrivalphase phase="7" duration="1" unit="minute">
+				<users arrivalrate="5.5" unit="second" maxnumber="1000" />
+			</arrivalphase>
+
+			<arrivalphase phase="8" duration="1" unit="minute">
+				<users arrivalrate="6" unit="second" maxnumber="1000" />
+			</arrivalphase>
+
+			<arrivalphase phase="9" duration="1" unit="minute">
+				<users arrivalrate="7" unit="second" maxnumber="1000" />
+			</arrivalphase>
+
+			<arrivalphase phase="10" duration="1" unit="minute">
+				<users arrivalrate="8" unit="second" maxnumber="1000" />
+			</arrivalphase> -->
+		</load>
+
+		<options>
+    		<option type="ts_http" name="user_agent">
+      		<user_agent probability="100">Mozilla/5.0 (Windows; U; Windows NT 5.2; fr-FR; rv:1.7.8) Gecko/20050511 Firefox/1.0.4</user_agent>
+    		</option>
+    	</options>
+
+    	<sessions>
+    		<session name="write_comment" weight="1" type="ts_http">
+
+    			<setdynvars sourcetype="random_number" start="1" end="100">
+      			<var name="user_id"/>
+      		</setdynvars>
+
+      		<request subst="true">
+      			<http url="/login" method="POST" version="1.1" content_type="application/json" contents="{&quot;email&quot;:&quot;example-%%_user_id%%@railstutorial.org&quot;,&quot;password&quot;:&quot;password&quot;}" />
+      		</request>
+
+      		<thinktime value="1" random="true" />
+
+			    <request>
+      			<dyn_variable name="location_urls" xpath="/html/body/div/div/ul/li[*]/a/@href" />
+      			<http url="/locations" version="1.1" method="GET"/>
+      		</request>
+
+      		<thinktime value="1" random="true" />
+
+      		<setdynvars sourcetype="eval" 
+                    code="fun({Pid,DynVars})->
+                          {ok,Val} = ts_dynvars:lookup(location_urls,DynVars),
+                          Rand = random:uniform(length(Val)),
+                          lists:nth(Rand,Val) end.">
+      			<var name="location_url" />
+      		</setdynvars>
+
+      		<request subst="true">
+      			<http url="/%%_location_url%%" method="GET" version="1.1" />
+      		</request>
+
+      		<setdynvars sourcetype="random_string" length="20">
+      			<var name="random_comment"/>
+      		</setdynvars>
+
+      		<setdynvars sourcetype="random_number" start="1" end="10">
+      			<var name="random_rate" />
+      		</setdynvars>
+
+      		<request subst="true">
+      			<http url="/%%_location_url%%/comments.js" method="POST" content_type="application/json" contents="{&quot;comment&quot;:{&quot;content&quot;:&quot;%%_random_comment%%&quot;,&quot;rate&quot;:&quot;%%_random_rate%%&quot;}}" />
+      		</request>
+
+      		<request>
+      			<http url="/logout" method="DELETE" version="1.1" />
+      		</request>
+      	</session>
+
+      	<session name="like_and_vote_comment" weight="2" type="ts_http">
+      		<setdynvars sourcetype="random_number" start="1" end="100">
+      			<var name="user_id"/>
+      		</setdynvars>
+
+      		<request subst="true">
+      			<http url="/login" method="POST" version="1.1" content_type="application/json" contents="{&quot;email&quot;:&quot;example-%%_user_id%%@railstutorial.org&quot;,&quot;password&quot;:&quot;password&quot;}" />
+      		</request>
+
+      		<thinktime value="1" random="true" />
+
+			    <request>
+      			<dyn_variable name="location_urls" xpath="/html/body/div/div/ul/li[*]/a/@href" />
+      			<http url="/locations" version="1.1" method="GET"/>
+      		</request>
+
+      		<thinktime value="1" random="true" />
+
+      		<setdynvars sourcetype="eval" 
+                  code="fun({Pid,DynVars})->
+                        {ok,Val} = ts_dynvars:lookup(location_urls,DynVars),
+                        Rand = random:uniform(length(Val)),
+                        lists:nth(Rand,Val) end.">
+      			<var name="location_url" />
+      		</setdynvars>
+
+      		<request subst="true">
+            <dyn_variable name="like_url" xpath="//div[@id='like']/a/@href" />
+      			<dyn_variable name="vote_urls" xpath="/html/body/div/div/div/ul/li[*]/div/div/div/a/@href"/>
+      			<http url="/%%_location_url%%" method="GET" version="1.1" />
+      		</request>
+
+          <request subst="true">
+            <http url="/%%_like_url%%.js" version="1.1" method="POST" />
+          </request>
+
+      		<thinktime value="2" random="true" />
+
+      		<setdynvars sourcetype="eval" 
+                  code="fun({Pid,DynVars})->
+                        {ok,Val} = ts_dynvars:lookup(vote_urls,DynVars),
+                        Rand = random:uniform(length(Val)),
+                        lists:nth(Rand,Val) end.">
+      			<var name="vote_url1" />
+      		</setdynvars>
+
+      		<thinktime value="1" random="true" />
+
+      		<request subst="true">
+      			<http url="/%%_vote_url1%%.js" method="POST" version="1.1" />
+      		</request>
+
+      		<setdynvars sourcetype="eval" 
+                  code="fun({Pid,DynVars})->
+                        {ok,Val} = ts_dynvars:lookup(vote_urls,DynVars),
+                        Rand = random:uniform(length(Val)),
+                        lists:nth(Rand,Val) end.">
+      			<var name="vote_url2" />
+      		</setdynvars>
+
+      		<thinktime value="1" random="true" />
+
+      		<request subst="true">
+      			<http url="/%%_vote_url2%%.js" method="POST" version="1.1" />
+      		</request>
+
+      		<request>
+      			<http url="/logout" method="DELETE" version="1.1" />
+      		</request>
+      	</session>
+
+      	<session name="lazy_reader" weight="7" type="ts_http" >
+      		<setdynvars sourcetype="random_number" start="1" end="100">
+      			<var name="user_id"/>
+      		</setdynvars>
+
+      		<request subst="true">
+      			<http url="/login" method="POST" version="1.1" content_type="application/json" contents="{&quot;email&quot;:&quot;example-%%_user_id%%@railstutorial.org&quot;,&quot;password&quot;:&quot;password&quot;}" />
+      		</request>
+
+      		<thinktime value="1" random="true" />
+
+      		<request>
+      			<dyn_variable name="location_urls" xpath="/html/body/div/div/ul/li[*]/a/@href" />
+      			<http url="/locations" version="1.1" method="GET" />
+      		</request>
+
+      		<thinktime value="1" random="true" />
+
+      		<setdynvars sourcetype="eval" 
+                  code="fun({Pid,DynVars})->
+                        {ok,Val} = ts_dynvars:lookup(location_urls,DynVars),
+                        Rand = random:uniform(length(Val)),
+                        lists:nth(Rand,Val) end.">
+      			<var name="location_url" />
+      		</setdynvars>
+
+      		<thinktime value="1" random="true" />
+
+      		<request subst="true">
+    			 <dyn_variable name="comment_users_urls" xpath="//ul[@id='comment_list']/li[*]/div/div/a/@href" />
+    			 <http url="/%%_location_url%%" version="1.1" method="GET" />
+      		</request>
+
+      		<thinktime value="1" random="true" />
+
+      		<setdynvars sourcetype="eval" 
+                  code="fun({Pid,DynVars})->
+                        {ok,Val} = ts_dynvars:lookup(comment_users_urls,DynVars),
+                        Rand = random:uniform(length(Val)),
+                        lists:nth(Rand,Val) end.">
+      			<var name="user_url1" />
+      			<var name="user_url2" />
+      			<var name="user_url3" />
+      		</setdynvars>
+
+      		<request subst="true">
+      			<dyn_variable name="user_location_urls" xpath="//div[@id='user_activity']/ul/li[*]/a/@href" />
+      			<http url="/%%_user_url1%%" version="1.1" method="GET" />
+      		</request>
+
+      		<thinktime value="2" random="true"></thinktime>
+
+      		<setdynvars sourcetype="eval" 
+                  code="fun({Pid,DynVars})->
+                        {ok,Val} = ts_dynvars:lookup(user_location_urls,DynVars),
+                        Rand = random:uniform(length(Val)),
+                        lists:nth(Rand,Val) end.">
+      			<var name="user_or_location_url1" />
+      		</setdynvars>
+
+      		<request subst="true">
+      			<http url="/%%_user_or_location_url1%%" version="1.1" method="GET" />
+      		</request>
+
+      		<thinktime value="1" random="true"></thinktime>
+
+      		<setdynvars sourcetype="eval" 
+                  code="fun({Pid,DynVars})->
+                        {ok,Val} = ts_dynvars:lookup(user_location_urls,DynVars),
+                        Rand = random:uniform(length(Val)),
+                        lists:nth(Rand,Val) end.">
+      			<var name="user_or_location_url2" />
+      		</setdynvars>
+
+      		<request subst="true">
+        			<http url="/%%_user_or_location_url2%%" version="1.1" method="GET" />
+      		</request>
+
+      		<request subst="true">
+        			<http url="/%%_user_url2%%" version="1.1" method="GET" />
+      		</request>
+
+      		<thinktime value="1" random="true" />
+
+      		<request subst="true">
+        			<http url="/%%_user_url3%%" version="1.1" method="GET" />
+      		</request>
+
+      		<request>
+      			<http url="/logout" version="1.1" method="DELETE" />
+      		</request>
+      	</session>
+      </sessions>
+	</tsung> 

@@ -8,7 +8,9 @@ class CommentsController < ApplicationController
   def create
     
     # Check if the current user is login or not
-    check_login
+    if !check_login
+      return
+    end
 
     # Check if the location exist or not
     location = Location.find(params[:id])
@@ -25,6 +27,7 @@ class CommentsController < ApplicationController
     location.comments << @comment
     user.comments << @comment
 
+    @comment[:user_name] = user[:name]
     # If successfully saved, respond with the javascript to prepend the new comment into the comment list
     if @comment.save
       # Update the rate information
@@ -297,8 +300,9 @@ private
       #  store_location
       flash[:danger] = "Please Login"
       redirect_to_page login_path
-      return
+      return false
     end
+    return true
   end
 
   def redirect_to_page(page_path)
