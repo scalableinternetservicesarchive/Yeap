@@ -88,7 +88,8 @@ class LocationsController < ApplicationController
       sum += comment[:rate]
       count += 1
     end
-    @rate = (count == 0) ? 0 : (sum / count)
+    baserate = @location.rate.to_i
+    @rate = (count == 0) ? baserate : ((sum * 0.5 + baserate * 0.5) / count)
     
     set_liked
 

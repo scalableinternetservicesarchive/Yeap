@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150508234101) do
+ActiveRecord::Schema.define(version: 20150603222206) do
 
   create_table "comments", force: :cascade do |t|
     t.integer  "user_id",     limit: 4
@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(version: 20150508234101) do
     t.float    "longitude",  limit: 24,    default: 0.0
     t.datetime "created_at",                                               null: false
     t.datetime "updated_at",                                               null: false
+    t.string   "rate",       limit: 255
   end
 
   add_index "locations", ["name"], name: "index_locations_on_name", using: :btree

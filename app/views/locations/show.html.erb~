@@ -1,0 +1,50 @@
+<div id="location_detail" class="location">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="container">
+        <%= image_tag @location[:img_url], size: "200" %>
+      </div>
+      <div id="like" >
+        <%= link_to @like.to_s, like_path(@location), method: :post, remote: true%>
+      </div>
+    </div>
+    
+    <div class="col-md-2 col-md-offset-1">
+      <div class="container">
+        <ul>
+          <li><%= "Name: " + @location[:name] %></li>
+          <li><%= "Address: " + @location[:address] %></li>
+          <li><%= "Bussiness Time: " + @location[:start_time].strftime("%H:%M:%S") + " - " + @location[:end_time].strftime("%H:%M:%S") %>
+          <li><%= "Average Price: " + @location[:avg_price].to_s %></li>
+          <li id="rate"><%= "Rate: " + @rate.round(2).to_s %></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div id="location_intro" class="panel panel-default">
+    <p><%= @location[:intro] %></p>
+  </div>
+
+  <div id="location_map" class="panel panel-default">
+
+  </div>
+  
+  <%= link_to "Add comment", new_location_comments_path(@location), remote: true%>
+  <div id="add_comment" class="container">
+
+  </div>
+  <div id="message">
+  
+  </div>
+  
+  <div class="container">
+    <ul id="comment_list" class="list_group">
+      <% @location.comments.each do |comment| %>
+      	<%= render comment %>
+      <% end %>
+    </ul>
+  </div>
+
+</div>
+

@@ -17,6 +17,7 @@
           <li><%= "Bussiness Time: " + @location[:start_time].strftime("%H:%M:%S") + " - " + @location[:end_time].strftime("%H:%M:%S") %>
           <li><%= "Average Price: " + @location[:avg_price].to_s %></li>
           <li id="rate"><%= "Rate: " + @rate.round(2).to_s %></li>
+          <li><%= "Categories: " + @location[:intro] %></li>
         </ul>
       </div>
     </div>
