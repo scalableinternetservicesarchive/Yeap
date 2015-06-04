@@ -1,7 +1,7 @@
 
 <div class="row" id="add_comment">
   <div class="col_md_6 col_md_offset_3">
-    <%= form_for @comment, :url => location_comments_path(@location), remote: true do |f|%>
+    <%= form_for @comments, :url => location_comments_path(@location), remote: true do |f|%>
       
       <div class="form-group">
     	  <%= f.label :content %>

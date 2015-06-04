@@ -2,8 +2,8 @@
 
 <div id="location_detail" class="location">
   <div class="row">
-    <div class="col-md-2 col-sm-offset-2 col-md-offset-1">
-      <div class="container">
+    <div class="col-md-2 col-md-offset-1">
+      <div class="container" col-sm-offset-2 >
         <%= image_tag @location[:img_url], size: "200" %>
       </div>
       <div id="like" >
@@ -54,10 +54,6 @@
     </div>
   </div>
 
-  <div id="location_intro" class="panel panel-default">
-    <p><%= @location[:intro] %></p>
-  </div>
-
   <div id="location_map" class="panel panel-default">
 
   </div>
@@ -70,13 +66,15 @@
   
   </div>
   
+  <%= will_paginate @comments_per_page%> 
   <div class="container">
     <ul id="comment_list" class="list_group">
-      <% @location.comments.each do |comment| %>
+      <% @comments_per_page.each do |comment| %>
       	<%= render comment %>
       <% end %>
     </ul>
   </div>
+  <%= will_paginate @comments_per_page%> 
 
 </div>
 

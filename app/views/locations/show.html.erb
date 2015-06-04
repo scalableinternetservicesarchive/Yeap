@@ -54,10 +54,6 @@
     </div>
   </div>
 
-  <div id="location_intro" class="panel panel-default">
-    <p><%= @location[:intro] %></p>
-  </div>
-
   <div id="location_map" class="panel panel-default">
 
   </div>
@@ -72,11 +68,12 @@
   
   <div class="container">
     <ul id="comment_list" class="list_group">
-      <% @location.comments.each do |comment| %>
+      <% @comments_per_page.each do |comment| %>
       	<%= render comment %>
       <% end %>
     </ul>
   </div>
+  <%= will_paginate @comments_per_page%> 
 
 </div>
 

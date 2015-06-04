@@ -10,8 +10,8 @@ class LocationsController < ApplicationController
   def index
     
     # Check if there is parameter num_to_return, otherwise set to the default number
-    num_to_return = params[:num_to_return].nil? ? 12 : params[:num_to_return]
-    @locations = Location.limit(num_to_return)
+    #num_to_return = params[:num_to_return].nil? ? 12 : params[:num_to_return]
+    #@locations = Location.limit(num_to_return)
     @locations = Location.paginate(page: params[:page], :per_page => 18, :total_entries => 900)
 
   end
@@ -24,6 +24,8 @@ class LocationsController < ApplicationController
     if @location.nil?
       redirect_to action: :index
     end
+    
+    @comments_per_page = Comment.paginate(page: params[:page], :per_page => 3)
   end
 
   # Like a specific location.
