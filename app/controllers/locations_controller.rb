@@ -24,8 +24,8 @@ class LocationsController < ApplicationController
     if @location.nil?
       redirect_to action: :index
     end
-    
-    @comments_per_page = Comment.paginate(page: params[:page], :per_page => 5)
+    @comments_here = @location.comments
+    @comments_per_page = @comments_here.paginate(page: params[:page], :per_page => 5)
   end
 
   # Like a specific location.
