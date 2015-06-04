@@ -115,7 +115,7 @@
 
       		<thinktime value="1" random="true" />
 
-			    <request>
+			<request>
       			<dyn_variable name="location_urls" xpath="/html/body/div/div/ul/li[*]/a/@href" />
       			<http url="/locations" version="1.1" method="GET"/>
       		</request>
