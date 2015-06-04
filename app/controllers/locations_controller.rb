@@ -11,8 +11,9 @@ class LocationsController < ApplicationController
   def index
     
     # Check if there is parameter num_to_return, otherwise set to the default number
-    num_to_return = params[:num_to_return].nil? ? 50 : params[:num_to_return]
-    @locations = Location.order("RAND()").limit(num_to_return)
+    #num_to_return = params[:num_to_return].nil? ? 12 : params[:num_to_return]
+    #@locations = Location.limit(num_to_return)
+    @locations = Location.paginate(page: params[:page], :per_page => 18, :total_entries => 900)
 
   end
 
@@ -24,6 +25,8 @@ class LocationsController < ApplicationController
     if @location.nil?
       redirect_to action: :index
     end
+    @comments_here = @location.comments
+    @comments_per_page = @comments_here.paginate(page: params[:page], :per_page => 5)
   end
 
   # Like a specific location.
@@ -58,6 +61,7 @@ class LocationsController < ApplicationController
       
       if new_record.save
         @like = "Liked"
+        @like_img = 'like.png'
         respond_to do |format|
           format.js { }
         end
@@ -69,6 +73,7 @@ class LocationsController < ApplicationController
     else
       if record.destroy
         @like = "Like"
+        @like_img = 'unlike.png'
         respond_to do |format|
           format.js {}
         end
@@ -89,7 +94,8 @@ class LocationsController < ApplicationController
       sum += comment[:rate]
       count += 1
     end
-    @rate = (count == 0) ? 0 : (sum / count)
+    baserate = @location.rate.to_i
+    @rate = (count == 0) ? baserate : ((sum * 0.5 + baserate * 0.5) / count)
     
     set_liked
 
@@ -102,6 +108,7 @@ class LocationsController < ApplicationController
   def set_liked
 
     @like = "Like"
+    @like_img = 'like.png'
     
     # Update the @like information here if the user has logged in
     if logged_in?
@@ -110,6 +117,7 @@ class LocationsController < ApplicationController
       record = Like.find_by(:user_id => user_id, :location_id => location_id)
       if !record.nil?
         @like = "Liked"
+        @like_img = 'like.png'
       end
     end
   end

@@ -1,0 +1,80 @@
+
+
+<div id="location_detail" class="location">
+  <div class="row">
+    <div class="col-md-2 col-md-offset-1">
+      <div class="container" col-sm-offset-2 >
+        <%= image_tag @location[:img_url], size: "200" %>
+      </div>
+      <div id="like" >
+        <%= link_to @like.to_s, like_path(@location), method: :post, remote: true%>
+      </div>
+      <div id="like-img" align="right">
+        <%= link_to image_tag(@like_img, size: "100x50", alt: @like.to_s), like_path(@location), method: :post, remote: true%>
+      </div>
+    </div>
+    
+    <div class="col-md-2 col-md-offset-1">
+      <div class="container">
+        <table cellspacing='0'> <!-- cellspacing='0' is important, must stay -->
+
+	        <!-- Table Body -->
+	        <tbody>
+
+		        <tr>
+			        <td>Name</td>
+			        <td><%= @location[:name] %></td>
+		        </tr><!-- Table Row -->
+
+		        <tr class="even">
+			        <td>Categories</td>
+			        <td><%= @location[:intro] %></td>
+		        </tr><!-- Darker Table Row -->
+
+		        <tr>
+			        <td>Average Price&nbsp&nbsp</td>
+			        <td><%= @location[:avg_price].to_s %></td>
+		        </tr>
+
+		        <tr class="even">
+			        <td>Rating</td>
+			        <td><%= @rate.round(2).to_s %></td>
+		        </tr>
+
+		        <tr>
+			        <td>Address</td>
+			        <td><%= @location[:address] %></td>
+		        </tr>
+
+	        </tbody>
+	        <!-- Table Body -->
+
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div id="location_map" class="panel panel-default">
+
+  </div>
+  
+  <%= link_to "Add comment", new_location_comments_path(@location), remote: true%>
+  <div id="add_comment" class="container">
+
+  </div>
+  <div id="message">
+  
+  </div>
+  
+  <%= will_paginate @comments_per_page%> 
+  <div class="container">
+    <ul id="comment_list" class="list_group">
+      <% @comments_per_page.each do |comment| %>
+      	<%= render comment %>
+      <% end %>
+    </ul>
+  </div>
+  <%= will_paginate @comments_per_page%> 
+
+</div>
+
