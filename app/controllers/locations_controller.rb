@@ -10,8 +10,9 @@ class LocationsController < ApplicationController
   def index
     
     # Check if there is parameter num_to_return, otherwise set to the default number
-    num_to_return = params[:num_to_return].nil? ? 50 : params[:num_to_return]
-    @locations = Location.order("RAND()").limit(num_to_return)
+    #num_to_return = params[:num_to_return].nil? ? 12 : params[:num_to_return]
+    #@locations = Location.limit(num_to_return)
+    @locations = Location.paginate(page: params[:page], :per_page => 18, :total_entries => 900)
 
   end
 

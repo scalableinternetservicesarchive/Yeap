@@ -1,6 +1,3 @@
-
-<%= will_paginate %>
-
 <div class="container">
   <ul class="row">
     <% @locations.each do |location| %>
@@ -13,6 +10,7 @@
   </ul>
 </div>
 
+<%= will_paginate %>
 
 <ul class="users">
     <%= render @locations %> 
