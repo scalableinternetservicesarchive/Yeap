@@ -24,6 +24,10 @@ class CommentsController < ApplicationController
     # Create the comment
     @comment = Comment.new(comment_params)
     # Save the comment
+    if user.nil?
+      redirect_to_page locations_path
+      return
+    end
     location.comments << @comment
     user.comments << @comment
 
