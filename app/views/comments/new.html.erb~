@@ -1,0 +1,5 @@
+<%= will_paginate %>
+
+<%= render 'comment_form' %>
+
+<%= will_paginate %>

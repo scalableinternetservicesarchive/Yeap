@@ -1,1 +1,2 @@
 $("#like").html("<%= escape_javascript( link_to @like.to_s, like_path(@location), remote: true, method: :post) %>") 
+$("#like-img").html("<%= escape_javascript( link_to image_tag(@like_img, size: "100x50", alt: @like.to_s), like_path(@location), method: :post, remote: true) %>") 
