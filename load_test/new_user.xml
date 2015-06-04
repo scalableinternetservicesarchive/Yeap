@@ -109,175 +109,173 @@
 	      			<var name="user_id"/>
 	      		</setdynvars>
 
-      		<request subst="true">
-      			<http url="/login" method="POST" version="1.1" content_type="application/json" contents="{&quot;email&quot;:&quot;example-%%_user_id%%@railstutorial.org&quot;,&quot;password&quot;:&quot;password&quot;}" />
-      		</request>
+	      		<request subst="true">
+	      			<http url="/login" method="POST" version="1.1" content_type="application/json" contents="{&quot;email&quot;:&quot;example-%%_user_id%%@railstutorial.org&quot;,&quot;password&quot;:&quot;password&quot;}" />
+	      		</request>
 
-      		<thinktime value="1" random="true" />
+      			<thinktime value="1" random="true" />
 
-			<request>
-      			<dyn_variable name="location_urls" xpath="/html/body/div/div/ul/li[*]/a/@href" />
-      			<http url="/locations" version="1.1" method="GET"/>
-      		</request>
+				<request>
+	      			<dyn_variable name="location_urls" xpath="/html/body/div/div/ul/li[*]/a/@href" />
+	      			<http url="/locations" version="1.1" method="GET"/>
+	      		</request>
 
-      		<thinktime value="1" random="true" />
+      			<thinktime value="1" random="true" />
 
-      		<setdynvars sourcetype="eval" 
-                  code="fun({Pid,DynVars})->
-                        {ok,Val} = ts_dynvars:lookup(location_urls,DynVars),
-                        Rand = random:uniform(length(Val)),
-                        lists:nth(Rand,Val) end.">
-      			<var name="location_url" />
-      		</setdynvars>
+	      		<setdynvars sourcetype="eval" 
+	                  code="fun({Pid,DynVars})->
+	                        {ok,Val} = ts_dynvars:lookup(location_urls,DynVars),
+	                        Rand = random:uniform(length(Val)),
+	                        lists:nth(Rand,Val) end.">
+	      			<var name="location_url" />
+	      		</setdynvars>
 
-      		<request subst="true">
-            <dyn_variable name="like_url" xpath="//div[@id='like']/a/@href" />
-      			<dyn_variable name="vote_urls" xpath="/html/body/div/div/div/ul/li[*]/div/div/div/a/@href"/>
-      			<http url="/%%_location_url%%" method="GET" version="1.1" />
-      		</request>
+	      		<request subst="true">
+	            	<!-- <dyn_variable name="like_url" xpath="//div[@id='like']/a/@href" /> -->
+	      			<dyn_variable name="vote_urls" xpath="/html/body/div/div/div/ul/li[*]/div/div/div/a/@href"/>
+	      			<http url="/%%_location_url%%" method="GET" version="1.1" />
+	      		</request>
 
-          <request subst="true">
-            <http url="/%%_like_url%%.js" version="1.1" method="POST" />
-          </request>
+		        <!-- <request subst="true">
+		            <http url="/%%_like_url%%.js" version="1.1" method="POST" />
+		        </request> -->
 
-      		<thinktime value="2" random="true" />
+	      		<setdynvars sourcetype="eval" 
+	                  code="fun({Pid,DynVars})->
+	                        {ok,Val} = ts_dynvars:lookup(vote_urls,DynVars),
+	                        Rand = random:uniform(length(Val)),
+	                        lists:nth(Rand,Val) end.">
+	      			<var name="vote_url1" />
+	      		</setdynvars>
 
-      		<setdynvars sourcetype="eval" 
-                  code="fun({Pid,DynVars})->
-                        {ok,Val} = ts_dynvars:lookup(vote_urls,DynVars),
-                        Rand = random:uniform(length(Val)),
-                        lists:nth(Rand,Val) end.">
-      			<var name="vote_url1" />
-      		</setdynvars>
+      			<thinktime value="1" random="true" />
 
-      		<thinktime value="1" random="true" />
+	      		<request subst="true">
+	      			<http url="/%%_vote_url1%%.js" method="POST" version="1.1" />
+	      		</request>
 
-      		<request subst="true">
-      			<http url="/%%_vote_url1%%.js" method="POST" version="1.1" />
-      		</request>
+	      		<setdynvars sourcetype="eval" 
+	                  code="fun({Pid,DynVars})->
+	                        {ok,Val} = ts_dynvars:lookup(vote_urls,DynVars),
+	                        Rand = random:uniform(length(Val)),
+	                        lists:nth(Rand,Val) end.">
+	      			<var name="vote_url2" />
+      			</setdynvars>
 
-      		<setdynvars sourcetype="eval" 
-                  code="fun({Pid,DynVars})->
-                        {ok,Val} = ts_dynvars:lookup(vote_urls,DynVars),
-                        Rand = random:uniform(length(Val)),
-                        lists:nth(Rand,Val) end.">
-      			<var name="vote_url2" />
-      		</setdynvars>
+      			<thinktime value="1" random="true" />
 
-      		<thinktime value="1" random="true" />
+	      		<request subst="true">
+	      			<http url="/%%_vote_url2%%.js" method="POST" version="1.1" />
+	      		</request>
 
-      		<request subst="true">
-      			<http url="/%%_vote_url2%%.js" method="POST" version="1.1" />
-      		</request>
+	      		<request>
+	      			<http url="/logout" method="DELETE" version="1.1" />
+	      		</request>
+      		</session>
 
-      		<request>
-      			<http url="/logout" method="DELETE" version="1.1" />
-      		</request>
-      	</session>
+	      	<session name="lazy_reader" weight="10" type="ts_http" >
+	      		<setdynvars sourcetype="random_number" start="1" end="400">
+	      			<var name="user_id"/>
+	      		</setdynvars>
 
-      	<session name="lazy_reader" weight="10" type="ts_http" >
-      		<setdynvars sourcetype="random_number" start="1" end="400">
-      			<var name="user_id"/>
-      		</setdynvars>
+	      		<request subst="true">
+	      			<http url="/login" method="POST" version="1.1" content_type="application/json" contents="{&quot;email&quot;:&quot;example-%%_user_id%%@railstutorial.org&quot;,&quot;password&quot;:&quot;password&quot;}" />
+	      		</request>
 
-      		<request subst="true">
-      			<http url="/login" method="POST" version="1.1" content_type="application/json" contents="{&quot;email&quot;:&quot;example-%%_user_id%%@railstutorial.org&quot;,&quot;password&quot;:&quot;password&quot;}" />
-      		</request>
+	      		<thinktime value="1" random="true" />
 
-      		<thinktime value="1" random="true" />
+	      		<request>
+	      			<dyn_variable name="location_urls" xpath="/html/body/div/div/ul/li[*]/a/@href" />
+	      			<http url="/locations" version="1.1" method="GET" />
+	      		</request>
 
-      		<request>
-      			<dyn_variable name="location_urls" xpath="/html/body/div/div/ul/li[*]/a/@href" />
-      			<http url="/locations" version="1.1" method="GET" />
-      		</request>
+	      		<thinktime value="1" random="true" />
 
-      		<thinktime value="1" random="true" />
+	      		<setdynvars sourcetype="eval" 
+	                  code="fun({Pid,DynVars})->
+	                        {ok,Val} = ts_dynvars:lookup(location_urls,DynVars),
+	                        Rand = random:uniform(length(Val)),
+	                        lists:nth(Rand,Val) end.">
+	      			<var name="location_url" />
+	      		</setdynvars>
 
-      		<setdynvars sourcetype="eval" 
-                  code="fun({Pid,DynVars})->
-                        {ok,Val} = ts_dynvars:lookup(location_urls,DynVars),
-                        Rand = random:uniform(length(Val)),
-                        lists:nth(Rand,Val) end.">
-      			<var name="location_url" />
-      		</setdynvars>
+	      		<thinktime value="1" random="true" />
 
-      		<thinktime value="1" random="true" />
+	      		<request subst="true">
+	    			 <dyn_variable name="comment_users_urls" xpath="/html/body/div/div/div[6]/ul/li[*]/div/div/a/@href" />
+	    			 <http url="/%%_location_url%%" version="1.1" method="GET" />
+	      		</request>
 
-      		<request subst="true">
-    			 <dyn_variable name="comment_users_urls" xpath="//ul[@id='comment_list']/li[*]/div/div/a/@href" />
-    			 <http url="/%%_location_url%%" version="1.1" method="GET" />
-      		</request>
+	      		<thinktime value="1" random="true" />
 
-      		<thinktime value="1" random="true" />
+	      		<setdynvars sourcetype="eval" 
+	                  code="fun({Pid,DynVars})->
+	                        {ok,Val} = ts_dynvars:lookup(comment_users_urls,DynVars),
+	                        Rand = random:uniform(length(Val)),
+	                        lists:nth(Rand,Val) end.">
+	      			<var name="user_url1" />
+	      		</setdynvars>
 
-      		<setdynvars sourcetype="eval" 
-                  code="fun({Pid,DynVars})->
-                        {ok,Val} = ts_dynvars:lookup(comment_users_urls,DynVars),
-                        Rand = random:uniform(length(Val)),
-                        lists:nth(Rand,Val) end.">
-      			<var name="user_url1" />
-      		</setdynvars>
+	      		<request subst="true">
+	      			<dyn_variable name="user_location_urls" xpath="/html/body/div/div/div[2]/ul/li[*]/a/@href" />
+	      			<http url="/%%_user_url1%%" version="1.1" method="GET" />
+	      		</request>
 
-      		<request subst="true">
-      			<dyn_variable name="user_location_urls" xpath="//div[@id='user_activity']/ul/li[*]/a/@href" />
-      			<http url="/%%_user_url1%%" version="1.1" method="GET" />
-      		</request>
+	      		<setdynvars sourcetype="eval" 
+	                  code="fun({Pid,DynVars})->
+	                        {ok,Val} = ts_dynvars:lookup(user_location_urls,DynVars),
+	                        Rand = random:uniform(length(Val)),
+	                        lists:nth(Rand,Val) end.">
+	      			<var name="user_or_location_url1" />
+	      		</setdynvars>
 
-      		<setdynvars sourcetype="eval" 
-                  code="fun({Pid,DynVars})->
-                        {ok,Val} = ts_dynvars:lookup(user_location_urls,DynVars),
-                        Rand = random:uniform(length(Val)),
-                        lists:nth(Rand,Val) end.">
-      			<var name="user_or_location_url1" />
-      		</setdynvars>
+	      		<request subst="true">
+	      			<http url="/%%_user_or_location_url1%%" version="1.1" method="GET" />
+	      		</request>
 
-      		<request subst="true">
-      			<http url="/%%_user_or_location_url1%%" version="1.1" method="GET" />
-      		</request>
+	      		<thinktime value="1" random="true"></thinktime>
 
-      		<thinktime value="1" random="true"></thinktime>
+	      		<setdynvars sourcetype="eval" 
+	                  code="fun({Pid,DynVars})->
+	                        {ok,Val} = ts_dynvars:lookup(user_location_urls,DynVars),
+	                        Rand = random:uniform(length(Val)),
+	                        lists:nth(Rand,Val) end.">
+	      			<var name="user_or_location_url2" />
+	      		</setdynvars>
 
-      		<setdynvars sourcetype="eval" 
-                  code="fun({Pid,DynVars})->
-                        {ok,Val} = ts_dynvars:lookup(user_location_urls,DynVars),
-                        Rand = random:uniform(length(Val)),
-                        lists:nth(Rand,Val) end.">
-      			<var name="user_or_location_url2" />
-      		</setdynvars>
+	      		<request subst="true">
+	        			<http url="/%%_user_or_location_url2%%" version="1.1" method="GET" />
+	      		</request>
 
-      		<request subst="true">
-        			<http url="/%%_user_or_location_url2%%" version="1.1" method="GET" />
-      		</request>
+	      		<setdynvars sourcetype="eval" 
+	                  code="fun({Pid,DynVars})->
+	                        {ok,Val} = ts_dynvars:lookup(comment_users_urls,DynVars),
+	                        Rand = random:uniform(length(Val)),
+	                        lists:nth(Rand,Val) end.">
+	      			<var name="user_url2" />
+	      		</setdynvars>
 
-      		<setdynvars sourcetype="eval" 
-                  code="fun({Pid,DynVars})->
-                        {ok,Val} = ts_dynvars:lookup(comment_users_urls,DynVars),
-                        Rand = random:uniform(length(Val)),
-                        lists:nth(Rand,Val) end.">
-      			<var name="user_url2" />
-      		</setdynvars>
+	      		<request subst="true">
+	        			<http url="/%%_user_url2%%" version="1.1" method="GET" />
+	      		</request>
 
-      		<request subst="true">
-        			<http url="/%%_user_url2%%" version="1.1" method="GET" />
-      		</request>
+	      		<thinktime value="1" random="true" />
 
-      		<thinktime value="1" random="true" />
+	      		<setdynvars sourcetype="eval" 
+	                  code="fun({Pid,DynVars})->
+	                        {ok,Val} = ts_dynvars:lookup(comment_users_urls,DynVars),
+	                        Rand = random:uniform(length(Val)),
+	                        lists:nth(Rand,Val) end.">
+	      			<var name="user_url3" />
+	      		</setdynvars>
 
-      		<setdynvars sourcetype="eval" 
-                  code="fun({Pid,DynVars})->
-                        {ok,Val} = ts_dynvars:lookup(comment_users_urls,DynVars),
-                        Rand = random:uniform(length(Val)),
-                        lists:nth(Rand,Val) end.">
-      			<var name="user_url3" />
-      		</setdynvars>
+	      		<request subst="true">
+	        			<http url="/%%_user_url3%%" version="1.1" method="GET" />
+	      		</request>
 
-      		<request subst="true">
-        			<http url="/%%_user_url3%%" version="1.1" method="GET" />
-      		</request>
-
-      		<request>
-      			<http url="/logout" version="1.1" method="DELETE" />
-      		</request>
-      	</session>
+	      		<request>
+	      			<http url="/logout" version="1.1" method="DELETE" />
+	      		</request>
+	      	</session>
       </sessions>
 	</tsung> 
