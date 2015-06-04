@@ -1,0 +1,21 @@
+
+<%= will_paginate %>
+
+<div class="container">
+  <ul class="row">
+    <% @locations.each do |location| %>
+      <li class="col-lg-2 col-md-2 col-sm-3 col-xs-4">
+        <a href="<%= location_path(location) %>" class="thumbnail">
+          <%= image_tag location[:img_url] %>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+</div>
+
+
+<ul class="users">
+    <%= render @locations %> 
+</ul>
+
+<%= will_paginate %>

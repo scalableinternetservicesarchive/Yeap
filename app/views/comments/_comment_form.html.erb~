@@ -1,0 +1,21 @@
+
+<div class="row" id="add_comment">
+  <div class="col_md_6 col_md_offset_3">
+    <%= form_for @comments, :url => location_comments_path(@location), remote: true do |f|%>
+      
+      <div class="form-group">
+    	  <%= f.label :content %>
+    	  <%= f.text_field :content, class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+    	  <%= f.label :rate %>
+    	  <%= f.text_field :rate, class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= f.submit class: "btn btn-default"%>
+   	  </div>
+    <% end %>
+  </div> 
+</div>
