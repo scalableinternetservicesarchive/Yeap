@@ -1,0 +1,21 @@
+octopus:
+  environments:
+    - production
+  replicated: true
+  fully_replicated: true
+  verify_connection: true
+  production:
+    slave1:
+      host: 
+      adapter: mysql2
+      username: root
+      password: 
+      database: rails_app
+      reconnect: true
+    slave2:
+      host:
+      adapter: mysql2
+      username: root
+      password:
+      database: rails_app
+      reconnect: true
