@@ -23,6 +23,7 @@ class CommentsController < ApplicationController
     user = @current_user
     # Create the comment
     @comment = Comment.new(comment_params)
+    @comment[:user_name] = user[:name]
     # Save the comment
     if user.nil?
       redirect_to_page locations_path
@@ -31,7 +32,6 @@ class CommentsController < ApplicationController
     location.comments << @comment
     user.comments << @comment
 
-    @comment[:user_name] = user[:name]
     # If successfully saved, respond with the javascript to prepend the new comment into the comment list
     if @comment.save
       # Update the rate information
