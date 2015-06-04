@@ -3,6 +3,7 @@ class LocationsController < ApplicationController
   before_action :set_location, only: [:show]
 
   include SessionsHelper
+  include LocationsHelper
   # Return a list of locations to display on the homepage.
   # Currently, only return a list of random locations. In the future version, return the locations baed on the user's location.
   # The user does not need to login to obtain the list of locations.

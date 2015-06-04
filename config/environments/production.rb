@@ -14,6 +14,8 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = false
   host = 'localhost:3000'
   config.action_mailer.default_url_options = { host: host}
+  
+  config.cache_store = :dalli_store
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
