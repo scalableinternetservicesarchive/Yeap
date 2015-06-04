@@ -57,6 +57,7 @@ class LocationsController < ApplicationController
       
       if new_record.save
         @like = "Liked"
+        @like_img = 'like.png'
         respond_to do |format|
           format.js { }
         end
@@ -68,6 +69,7 @@ class LocationsController < ApplicationController
     else
       if record.destroy
         @like = "Like"
+        @like_img = 'unlike.png'
         respond_to do |format|
           format.js {}
         end
@@ -102,6 +104,7 @@ class LocationsController < ApplicationController
   def set_liked
 
     @like = "Like"
+    @like_img = 'like.png'
     
     # Update the @like information here if the user has logged in
     if logged_in?
@@ -110,6 +113,7 @@ class LocationsController < ApplicationController
       record = Like.find_by(:user_id => user_id, :location_id => location_id)
       if !record.nil?
         @like = "Liked"
+        @like_img = 'like.png'
       end
     end
   end
