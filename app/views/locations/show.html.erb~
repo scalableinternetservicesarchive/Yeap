@@ -66,10 +66,9 @@
   
   </div>
   
-  <%= will_paginate @comments_per_page%> 
   <div class="container">
     <ul id="comment_list" class="list_group">
-      <% @comments_per_page.each do |comment| %>
+      <% @location.comments.each do |comment| %>
       	<%= render comment %>
       <% end %>
     </ul>
