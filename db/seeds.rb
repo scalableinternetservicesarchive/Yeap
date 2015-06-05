@@ -6,6 +6,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+
 User.create!(name: 'Example User',
              email: 'example@railstutorial.org',
              password: 'foobar',
@@ -93,6 +94,7 @@ end
 puts place_id.to_s + ' locations has been added into Place'
 ################################################################################
 
+
 path = 'db/seeds/faked_comments.json'
 
 # must modify the current 'data.json' by adding objects in one single object
@@ -108,9 +110,18 @@ comment_id = 0
 comments.each do |comment|
   comment_id = comment_id + 1
   puts comment_id
-  Comment.create!(:user_id => comment['user_id'], :location_id => comment['location_id'], :content => comment['content'], :rate => comment['rate'], :upvote => comment['upvote'], :downvote => comment['downvote'])
+  Comment.create!(:user_id => comment['user_id'], :location_id => comment['location_id'], :content => comment['content'], :rate => comment['rate'], :upvote => comment['upvote'], :downvote => comment['downvote'], :user_name => "")
 
 end
 puts comment_id.to_s + ' comments has been added into Comment'
 =begin
+
+###############################################################33
+puts "adding one comment to each location"
+10443.times do |n|
+  puts n
+  name = Faker::Name.name
+  Comment.create!(:user_id => comment['user_id'], :location_id => n, :content => comment['content'], :rate => comment['rate'], :upvote => comment['upvote'], :downvote => comment['downvote'], :user_name => "")
+end
+puts "seeds done"
 =end
