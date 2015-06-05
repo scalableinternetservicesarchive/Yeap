@@ -69,16 +69,16 @@
   
 
 
-    <div class="container">
+  <div class="container">
+  <%= will_paginate @comments_per_page %> 
 
-      <ul id="comment_list" class="list_group">
-        <% @comments_per_page.each do |comment| %>
-        	<%= render comment %>
-        <% end %>
-      </ul>
+    <ul id="comment_list" class="list_group">
+      <% @comments_per_page.each do |comment| %>
+      	<%= render comment %>
+      <% end %>
+    </ul>
 
-    </div>
-    <%= will_paginate @comments_per_page %> 
+  </div>
 
 
 </div>
