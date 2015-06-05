@@ -1,4 +1,5 @@
 
+<% cache(cache_key_for_location_comments(@location.id, @comments_per_page)) do %>
 
 <div id="location_detail" class="location">
   <div class="row">
@@ -66,15 +67,20 @@
   
   </div>
   
-  <%= will_paginate @comments_per_page%> 
-  <div class="container">
-    <ul id="comment_list" class="list_group">
-      <% @comments_per_page.each do |comment| %>
-      	<%= render comment %>
-      <% end %>
-    </ul>
-  </div>
-  <%= will_paginate @comments_per_page%> 
+
+
+    <div class="container">
+
+      <ul id="comment_list" class="list_group">
+        <% @comments_per_page.each do |comment| %>
+        	<h1> <%= @comments_per_page.class %> </h1>
+        	<%= render comment %>
+        <% end %>
+      </ul>
+
+    </div>
+    <%= will_paginate @comments_per_page %> 
+
 
 </div>
-
+<% end %>
